@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>المحفوظات – فارغة - بيستاهل BISTAHEL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:#FFF3DF}
+body{font-family:'IBM Plex Sans Arabic','Noto Sans Arabic','DejaVu Sans',sans-serif;color:#392719;direction:rtl;display:flex;justify-content:center}
+.screen{width:390px;min-height:844px;background:#FFF3DF;position:relative;display:flex;flex-direction:column;overflow:hidden}
+.grow{flex:1}
+.sk{display:inline-block;background:#DCD0BF}.sk2{display:inline-block;background:#EADFCC}
+.row{display:flex;align-items:center}.col{display:flex;flex-direction:column}
+.ib{border:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(57,39,25,.10);flex:none;cursor:pointer}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(57,39,25,.07)}
+.h2{font-size:16px;font-weight:700;line-height:24px}
+.link{font-size:12px;font-weight:600;color:#F4770B;display:inline-flex;align-items:center;gap:2px}
+.stars{display:inline-flex;align-items:center}
+.svb{position:absolute;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center}
+.chips{display:flex;gap:8px;overflow:hidden;padding:2px 16px}
+.chip{height:32px;padding:0 16px;border-radius:999px;background:#fff;border:1px solid rgba(57,39,25,.14);display:flex;align-items:center;flex:none}
+.chip.on{background:#F4770B;border-color:#F4770B;box-shadow:0 2px 6px rgba(244,119,11,.25)}
+.chip.on i{background:rgba(255,255,255,.85)}
+.hscroll{display:flex;gap:12px;overflow:hidden;padding:2px 16px 6px}
+.pc{width:148px;flex:none;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(57,39,25,.07);overflow:hidden}
+.pc .img{position:relative;height:104px;background:#D8CEBF}
+.pc .b{padding:10px 10px 12px;display:flex;flex-direction:column;gap:7px}
+.hc{display:flex;gap:12px;padding:10px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(57,39,25,.07);align-items:stretch}
+.hc .img{position:relative;width:84px;height:84px;border-radius:10px;background:#D8CEBF;flex:none}
+.hc .b{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:2px 0}
+.dc{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(57,39,25,.07);padding:8px}
+.dc .img{position:relative;height:112px;border-radius:10px;background:#D8CEBF}
+.dc .b{display:flex;flex-direction:column;gap:7px;padding:10px 2px 4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px}
+.nav{position:sticky;bottom:0;height:68px;background:#fff;border-top:1px solid rgba(57,39,25,.08);box-shadow:0 -4px 12px rgba(57,39,25,.05);display:flex;align-items:center;justify-content:space-around;padding:0 8px;z-index:9;flex:none}
+.nav .it{width:48px;height:48px;display:flex;align-items:center;justify-content:center;color:rgba(57,39,25,.42)}
+.nav .it.on{color:#F4770B}
+.nav .fab{width:56px;height:56px;border-radius:50%;background:#F4770B;border:4px solid #fff;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-26px;box-shadow:0 6px 16px rgba(244,119,11,.4)}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-size:13px;font-weight:600}
+.inp{height:46px;border-radius:12px;border:1px solid #EBDDC6;background:#FFFCF6;display:flex;align-items:center;justify-content:space-between;padding:0 14px}
+.btn{height:50px;border:0;border-radius:999px;background:#F4770B;color:#fff;font-family:inherit;font-size:15px;font-weight:700;box-shadow:0 6px 16px rgba(244,119,11,.28);width:100%}
+.btn.out{background:#fff;color:#F4770B;border:1.5px solid #F4770B;box-shadow:none;height:44px;font-size:14px}
+.deco1{position:absolute;top:-96px;right:-96px;width:288px;height:288px;border-radius:50%;background:#D6AD55;opacity:.08}
+.deco2{position:absolute;bottom:-110px;left:-110px;width:320px;height:320px;border-radius:50%;background:#D6AD55;opacity:.08}
+.logo{border-radius:50%;background:#DCD0BF;border:1.5px solid #D6AD55}
+.tabs{display:flex;background:#fff;margin:0 16px;border-radius:12px;box-shadow:0 2px 10px rgba(57,39,25,.07)}
+.tab{flex:1;text-align:center;padding:12px 0 10px;font-size:14px;font-weight:600;color:rgba(57,39,25,.5);border-bottom:3px solid transparent}
+.tab.on{color:#F4770B;border-bottom-color:#F4770B}
+.bbar{position:sticky;bottom:0;background:rgba(255,255,255,.94);box-shadow:0 -4px 20px rgba(57,39,25,.08);padding:12px 16px;display:flex;gap:12px;align-items:center;z-index:9;flex:none}
+.bbar .btn{flex:1;height:48px}
+.hero{position:relative;height:220px;background:#D8CEBF;flex:none}
+.hero .t{position:absolute;top:16px;left:16px;right:16px;display:flex;justify-content:space-between}
+.dots{position:absolute;bottom:22px;left:0;right:0;display:flex;justify-content:center;gap:6px}
+.dots b{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.7)}.dots b.on{width:22px;border-radius:99px;background:#F4770B}
+.info{margin:-12px 16px 0;padding:16px;position:relative;z-index:2;display:flex;flex-direction:column;gap:12px}
+.rv{padding:14px;display:flex;flex-direction:column;gap:12px}
+.pill{display:inline-block;background:#fff;border:1px solid #EBDDC6;border-radius:999px}
+.tl{position:relative;padding:0 16px;display:flex;flex-direction:column;gap:14px}
+.tl:before{content:"";position:absolute;right:35px;top:20px;bottom:20px;width:2px;background:#E6D7BD}
+.tli{display:flex;gap:12px;align-items:flex-start;position:relative}
+.dot{width:40px;height:40px;border-radius:50%;background:#fff;border:2px solid #F9C79A;display:flex;align-items:center;justify-content:center;color:#F4770B;flex:none;z-index:2}
+</style>
+</head>
+<body>
+<main class="screen" data-screen="المحفوظات – فارغة">
+<div class="row" style="justify-content:flex-start;padding:16px 16px 6px;direction:ltr"><button class="ib" style="width:40px;height:40px;background:#fff;color:#392719"><svg class="" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div><div class="card col" style="margin:6px 16px 0;padding:16px;gap:14px"><div class="row" style="gap:14px"><i class="sk" style="width:72px;height:72px;border-radius:50%;flex:none;"></i><div class="col" style="gap:10px"><i class="sk" style="width:130px;height:12px;border-radius:999px;"></i><i class="sk2" style="width:80px;height:9px;border-radius:999px;"></i></div></div><button class="btn out">تعديل الملف</button></div><div class="card row" style="margin:12px 16px 0;padding:14px 0"><div class="col grow" style="align-items:center;gap:8px;"><i class="sk" style="width:30px;height:12px;border-radius:999px;"></i><span style="font-size:12px;font-weight:600">التقييمات</span></div><div class="col grow" style="align-items:center;gap:8px;border-inline-start:1px solid #F0E4D2;"><i class="sk" style="width:30px;height:12px;border-radius:999px;"></i><span style="font-size:12px;font-weight:600">المتابِعون</span></div><div class="col grow" style="align-items:center;gap:8px;border-inline-start:1px solid #F0E4D2;"><i class="sk" style="width:30px;height:12px;border-radius:999px;"></i><span style="font-size:12px;font-weight:600">المتابَعون</span></div></div><div class="tabs" style="margin-top:14px"><div class="tab ">تقييماتي</div><div class="tab on">المحفوظات</div><div class="tab ">النشاط</div></div><div class="col" style="align-items:center;text-align:center;gap:12px;padding:56px 32px 0"><div style="width:96px;height:96px;border-radius:50%;background:#FDEBD9;display:flex;align-items:center;justify-content:center;color:#F4770B"><svg class="" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div><span style="font-size:18px;font-weight:700;margin-top:6px">لا توجد محفوظات بعد</span><span style="font-size:14px;line-height:22px;color:rgba(57,39,25,.62)">احفظ الأماكن والأطباق لتجدها هنا</span></div><div class="grow"></div><nav class="nav"><div class="it "><svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="it "><svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div><div class="fab"><svg class="" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div><div class="it "><svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div><div class="it on"><svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div></nav>
+</main>
+</body>
+</html>
