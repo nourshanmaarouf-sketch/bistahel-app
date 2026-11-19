@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شاشة البداية - بيستاهل BISTAHEL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"IBM Plex Sans Arabic"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              orange: '#F4770B',
+              gold: '#D6AD55',
+              bg: '#FFF3DF',
+              dark: '#392719',
+              warmgray: '#E6DCCF'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      background-color: #FFF3DF;
+      color: #392719;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  </style>
+</head>
+<body class="h-full w-full flex items-center justify-center p-0 m-0 bg-[#FFF3DF] select-none">
+  <!-- Container strictly sized for standard 390x844 mobile viewport with no scrolling -->
+  <div class="relative w-[390px] h-[844px] max-w-[390px] max-h-[844px] bg-[#FFF3DF] overflow-hidden flex flex-col items-center justify-between shadow-2xl">
+    
+    <!-- 1. Ambient Background Decor: Two subtle soft gold transparent circles in opposite corners -->
+    <!-- Top-Right decorative circle -->
+    <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full pointer-events-none" 
+         style="background-color: #D6AD55; opacity: 0.08;"></div>
+    
+    <!-- Bottom-Left decorative circle -->
+    <div class="absolute -bottom-28 -left-28 w-80 h-80 rounded-full pointer-events-none" 
+         style="background-color: #D6AD55; opacity: 0.08;"></div>
+
+    <!-- Empty top spacer to achieve the requested 'slightly above center' balance -->
+    <div class="h-8 w-full pointer-events-none"></div>
+
+    <!-- 2. Center Branding Group (placed slightly above exact center) -->
+    <div class="relative z-10 flex flex-col items-center justify-center -mt-10">
+      <!-- Empty warm-gray circle placeholder for logo (120px diameter) with thin gold border -->
+      <div class="w-[120px] h-[120px] rounded-full border border-[#D6AD55] bg-[#E6DCCF] shadow-sm flex items-center justify-center"></div>
+
+      <!-- App Name: strictly "بيستاهل" in bold large brown text -->
+      <h1 class="mt-6 text-4xl font-bold tracking-tight text-[#392719]">
+        بيستاهل
+      </h1>
+    </div>
+
+    <!-- 3. Bottom Loading Indicator: exactly 80px from bottom edge -->
+    <!-- 3 small dots in #F4770B: 1st filled (100%), 2nd and 3rd at 40% opacity -->
+    <div class="relative z-10 mb-[80px] flex items-center justify-center gap-2">
+      <div class="w-2.5 h-2.5 rounded-full bg-[#F4770B]"></div>
+      <div class="w-2.5 h-2.5 rounded-full bg-[#F4770B] opacity-40"></div>
+      <div class="w-2.5 h-2.5 rounded-full bg-[#F4770B] opacity-40"></div>
+    </div>
+
+  </div>
+</body>
+</html>

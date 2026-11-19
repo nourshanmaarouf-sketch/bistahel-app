@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>نظام التصميم | بيستاهل - BISTAHEL Design System</title>
+<!-- Google Fonts: Cairo & Tajawal -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&amp;family=Tajawal:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config Customization -->
+<script data-purpose="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              primary: '#F4770B',
+              pressed: '#D86300',
+              disabled: '#FDEBD9',
+              gold: '#D6AD55',
+              dark: '#392719',
+              bg: '#FFF3DF',
+              card: '#FFFFFF',
+              border: '#F0E2CD',
+              skeletonFrom: '#EFE9E0',
+              skeletonTo: '#E5DEC0'
+            }
+          },
+          fontFamily: {
+            cairo: ['Cairo', 'sans-serif'],
+            tajawal: ['Tajawal', 'sans-serif']
+          },
+          boxShadow: {
+            'warm-sm': '0 2px 8px rgba(57, 39, 25, 0.05)',
+            'warm-md': '0 4px 16px rgba(57, 39, 25, 0.08)',
+            'warm-lg': '0 8px 24px rgba(57, 39, 25, 0.12)',
+            'warm-fab': '0 6px 20px rgba(244, 119, 11, 0.35)'
+          }
+        }
+      }
+    };
+  </script>
+<!-- Custom Styles for Shimmer Skeleton & System Tokens -->
+<style data-purpose="custom-tokens">
+    @keyframes skeletonPulse {
+      0%, 100% {
+        opacity: 1;
+        background-color: #EFE9E0;
+      }
+      50% {
+        opacity: 0.6;
+        background-color: #E4DCCF;
+      }
+    }
+
+    .skeleton-box {
+      animation: skeletonPulse 2s ease-in-out infinite;
+      background: linear-gradient(90deg, #EFE9E0 25%, #E5DEC0 50%, #EFE9E0 75%);
+      background-size: 200% 100%;
+    }
+
+    /* Custom Mobile Container Mockup */
+    .mobile-screen-wrapper {
+      max-width: 410px;
+      margin: 0 auto;
+      background-color: #FFF3DF;
+      min-height: 100vh;
+      border-left: 1px solid #EADBCC;
+      border-right: 1px solid #EADBCC;
+      box-shadow: 0 0 40px rgba(57, 39, 25, 0.06);
+    }
+  </style>
+</head>
+<body class="bg-[#F8F1E7] font-cairo text-brand-dark antialiased py-0 sm:py-6 selection:bg-[#F4770B] selection:text-white">
+<!-- BEGIN: MobileContainer -->
+<div class="mobile-screen-wrapper flex flex-col min-h-screen relative overflow-hidden" data-purpose="mobile-screen-container">
+<!-- BEGIN: MainHeader -->
+<header class="bg-brand-card px-5 pt-7 pb-6 border-b border-brand-border text-center shadow-warm-sm" data-purpose="system-header">
+<!-- App Logo Emblem -->
+<div class="flex justify-center mb-3">
+<div class="w-24 h-24 rounded-full overflow-hidden bg-white shadow-warm-md p-1 border-2 border-[#D6AD55]/40 flex items-center justify-center">
+<img alt="شعار بيستاهل BISTAHEL" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoQH1E1dAkjXBKiQQiNyaYbfX2vZJtKHY1ZGvNbrVjLH3XrOPDeLcZ3hTpbJyyoLjlSnrBO6R3iMv2KXEc2S3LY8KeeQ-vsqlMr1W5o9JMFV0mpRgHfkWAfY7-HfGueNdT8cLNfvfO0xUMM9oIXX3AcNZTEd7tpUWExO797chYE77mcul8_EHMPjvo5NGx57Deky28MlEzPH6m5R1xODN4s-nihFGK-4tHVu69_Wj7EGvT528rkNuzSg"/>
+</div>
+</div>
+<!-- Brand Titles -->
+<div class="space-y-1">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF3DF] border border-[#F0E2CD] text-xs font-semibold text-brand-primary mb-1">
+<span class="w-2 h-2 rounded-full bg-brand-primary animate-ping"></span>
+          نظام التصميم الموحّد v1.0
+        </div>
+<h1 class="text-2xl font-extrabold text-brand-dark tracking-tight">بيستاهل | BISTAHEL</h1>
+<p class="text-xs text-brand-dark/70 font-medium">دليل المعايير، الأنماط وهياكل المكونات الهيكلية (Skeleton)</p>
+</div>
+<!-- Specification Meta Pill -->
+<div class="mt-4 pt-3 border-t border-brand-border/60 flex items-center justify-between text-[11px] font-tajawal text-brand-dark/60">
+<span>عرض الشاشة: 390px</span>
+<span>اتجاه الواجهة: RTL كامل</span>
+<span>النمط: Minimal Skeleton</span>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: SystemContent -->
+<main class="flex-1 px-4 py-6 space-y-6" data-purpose="design-system-content">
+<!-- SECTION 1: Color Palette -->
+<!-- BEGIN: ColorPaletteSection -->
+<section class="bg-brand-card rounded-2xl p-4 border border-brand-border shadow-warm-sm" data-purpose="color-system">
+<div class="flex items-center justify-between mb-3 border-b border-brand-border pb-2">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-brand-primary"></span>
+<h2 class="font-bold text-sm text-brand-dark">1. سلّم الألوان (Color Palette)</h2>
+</div>
+<span class="text-[10px] text-brand-dark/50 font-mono">TOKENS</span>
+</div>
+<div class="grid grid-cols-2 gap-2.5">
+<!-- Primary -->
+<div class="p-2.5 rounded-xl border border-brand-border bg-[#FFFDF9] flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-lg bg-[#F4770B] shadow-sm flex-shrink-0"></div>
+<div class="overflow-hidden">
+<p class="text-[11px] font-bold text-brand-dark truncate">برتقالي أساسي</p>
+<p class="text-[10px] font-mono text-brand-dark/60">#F4770B</p>
+</div>
+</div>
+<!-- Secondary Gold -->
+<div class="p-2.5 rounded-xl border border-brand-border bg-[#FFFDF9] flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-lg bg-[#D6AD55] shadow-sm flex-shrink-0"></div>
+<div class="overflow-hidden">
+<p class="text-[11px] font-bold text-brand-dark truncate">ذهبي التميز</p>
+<p class="text-[10px] font-mono text-brand-dark/60">#D6AD55</p>
+</div>
+</div>
+<!-- Pressed Tone -->
+<div class="p-2.5 rounded-xl border border-brand-border bg-[#FFFDF9] flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-lg bg-[#D86300] shadow-sm flex-shrink-0"></div>
+<div class="overflow-hidden">
+<p class="text-[11px] font-bold text-brand-dark truncate">برتقالي مضغوط</p>
+<p class="text-[10px] font-mono text-brand-dark/60">#D86300</p>
+</div>
+</div>
+<!-- Light / Disabled -->
+<div class="p-2.5 rounded-xl border border-brand-border bg-[#FFFDF9] flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-lg bg-[#FDEBD9] border border-brand-primary/20 flex-shrink-0"></div>
+<div class="overflow-hidden">
+<p class="text-[11px] font-bold text-brand-dark truncate">معطّل / فاتح</p>
+<p class="text-[10px] font-mono text-brand-dark/60">#FDEBD9</p>
+</div>
+</div>
+<!-- Dark Brown Neutral -->
+<div class="p-2.5 rounded-xl border border-brand-border bg-[#FFFDF9] flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-lg bg-[#392719] shadow-sm flex-shrink-0"></div>
+<div class="overflow-hidden">
+<p class="text-[11px] font-bold text-brand-dark truncate">بني النصوص</p>
+<p class="text-[10px] font-mono text-brand-dark/60">#392719</p>
+</div>
+</div>
+<!-- Warm Ivory Background -->
+<div class="p-2.5 rounded-xl border border-brand-border bg-[#FFFDF9] flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-lg bg-[#FFF3DF] border border-brand-border flex-shrink-0"></div>
+<div class="overflow-hidden">
+<p class="text-[11px] font-bold text-brand-dark truncate">عاجي الخلفيات</p>
+<p class="text-[10px] font-mono text-brand-dark/60">#FFF3DF</p>
+</div>
+</div>
+</div>
+</section>
+<!-- END: ColorPaletteSection -->
+<!-- SECTION 2: Typography Scale -->
+<!-- BEGIN: TypographySection -->
+<section class="bg-brand-card rounded-2xl p-4 border border-brand-border shadow-warm-sm" data-purpose="typography-system">
+<div class="flex items-center justify-between mb-3 border-b border-brand-border pb-2">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-brand-gold"></span>
+<h2 class="font-bold text-sm text-brand-dark">2. سلّم الخطوط والطباعة (Typography)</h2>
+</div>
+<span class="text-[10px] text-brand-dark/50 font-mono">Cairo &amp; Tajawal</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-baseline justify-between border-b border-brand-border/40 pb-2">
+<div>
+<div class="text-xl font-black text-brand-dark">عنوان ضخم - H1 Bold</div>
+<span class="text-[10px] text-brand-dark/50 font-tajawal">حجم 22px • وزن 800 • للعناوين الرئيسية</span>
+</div>
+<span class="text-xs font-mono text-brand-primary">22px</span>
+</div>
+<div class="flex items-baseline justify-between border-b border-brand-border/40 pb-2">
+<div>
+<div class="text-base font-bold text-brand-dark">عنوان فرعي - H2 Medium</div>
+<span class="text-[10px] text-brand-dark/50 font-tajawal">حجم 16px • وزن 700 • للأقسام والبطاقات</span>
+</div>
+<span class="text-xs font-mono text-brand-primary">16px</span>
+</div>
+<div class="flex items-baseline justify-between border-b border-brand-border/40 pb-2">
+<div>
+<div class="text-sm font-semibold text-brand-dark">نص قياسي - Body Regular</div>
+<span class="text-[10px] text-brand-dark/50 font-tajawal">حجم 14px • وزن 500 • للفقرات والمحتوى العام</span>
+</div>
+<span class="text-xs font-mono text-brand-primary">14px</span>
+</div>
+<div class="flex items-baseline justify-between">
+<div>
+<div class="text-xs font-normal text-brand-dark/70">نص فرعي - Caption &amp; Meta</div>
+<span class="text-[10px] text-brand-dark/50 font-tajawal">حجم 11px • وزن 400 • للتفاصيل والشارات</span>
+</div>
+<span class="text-xs font-mono text-brand-primary">11px</span>
+</div>
+</div>
+</section>
+<!-- END: TypographySection -->
+<!-- SECTION 3: Buttons & States -->
+<!-- BEGIN: ButtonsSection -->
+<section class="bg-brand-card rounded-2xl p-4 border border-brand-border shadow-warm-sm" data-purpose="buttons-system">
+<div class="flex items-center justify-between mb-3 border-b border-brand-border pb-2">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-brand-primary"></span>
+<h2 class="font-bold text-sm text-brand-dark">3. الأزرار وحالاتها (Rounded Pill 999px)</h2>
+</div>
+<span class="text-[10px] text-brand-dark/50 font-mono">STATES</span>
+</div>
+<div class="space-y-3">
+<!-- Primary Filled State -->
+<div>
+<span class="text-[11px] font-bold text-brand-dark/60 block mb-1.5">الزر الأساسي (Primary)</span>
+<div class="grid grid-cols-3 gap-2">
+<button class="w-full py-2.5 px-3 rounded-full bg-[#F4770B] text-white text-xs font-bold shadow-sm flex items-center justify-center gap-1" type="button">
+<span>عادي</span>
+</button>
+<button class="w-full py-2.5 px-3 rounded-full bg-[#D86300] text-white text-xs font-bold shadow-inner flex items-center justify-center gap-1" type="button">
+<span>مضغوط</span>
+</button>
+<button class="w-full py-2.5 px-3 rounded-full bg-[#FDEBD9] text-brand-dark/40 text-xs font-bold cursor-not-allowed flex items-center justify-center gap-1" disabled="" type="button">
+<span>معطّل</span>
+</button>
+</div>
+</div>
+<!-- Secondary Outlined State -->
+<div>
+<span class="text-[11px] font-bold text-brand-dark/60 block mb-1.5">الزر الثانوي (Outlined)</span>
+<div class="grid grid-cols-3 gap-2">
+<button class="w-full py-2.5 px-3 rounded-full border-2 border-[#F4770B] text-[#F4770B] bg-white text-xs font-bold" type="button">
+<span>عادي</span>
+</button>
+<button class="w-full py-2.5 px-3 rounded-full border-2 border-[#D86300] bg-[#FFF3DF] text-[#D86300] text-xs font-bold" type="button">
+<span>مضغوط</span>
+</button>
+<button class="w-full py-2.5 px-3 rounded-full border-2 border-[#F0E2CD] text-[#F0E2CD] bg-white text-xs font-bold cursor-not-allowed" disabled="" type="button">
+<span>معطّل</span>
+</button>
+</div>
+</div>
+<!-- Small & Icon Buttons -->
+<div>
+<span class="text-[11px] font-bold text-brand-dark/60 block mb-1.5">أزرار خفيفة ودائرية</span>
+<div class="flex items-center gap-2">
+<button class="flex-1 py-2 px-3 rounded-full bg-[#FFF3DF] text-[#392719] text-xs font-bold border border-[#F0E2CD]" type="button">
+                زر نصي خفيف
+              </button>
+<!-- Circular Action Button -->
+<button aria-label="أيقونة مفضلة" class="w-10 h-10 rounded-full bg-[#FFF3DF] border border-[#F0E2CD] flex items-center justify-center text-[#F4770B] shadow-sm" type="button">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+</svg>
+</button>
+<button aria-label="أيقونة مشاركة" class="w-10 h-10 rounded-full bg-[#F4770B] text-white flex items-center justify-center shadow-warm-sm" type="button">
+<svg class="w-5 h-5 stroke-current fill-none stroke-2" viewbox="0 0 24 24">
+<path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- END: ButtonsSection -->
+<!-- SECTION 4: Form Inputs & Fields -->
+<!-- BEGIN: FormInputsSection -->
+<section class="bg-brand-card rounded-2xl p-4 border border-brand-border shadow-warm-sm" data-purpose="inputs-system">
+<div class="flex items-center justify-between mb-3 border-b border-brand-border pb-2">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-brand-primary"></span>
+<h2 class="font-bold text-sm text-brand-dark">4. حقول الإدخال (Form Inputs - 12px Radius)</h2>
+</div>
+<span class="text-[10px] text-brand-dark/50 font-mono">INPUTS</span>
+</div>
+<div class="space-y-3">
+<!-- Search Field Skeleton -->
+<div class="relative flex items-center">
+<div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-brand-dark/50">
+<svg class="w-4 h-4 stroke-current stroke-2 fill-none" viewbox="0 0 24 24">
+<circle cx="11" cy="11" r="8"></circle>
+<line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+</svg>
+</div>
+<div class="w-full bg-[#FFFDF9] border border-brand-border rounded-xl py-3 pr-10 pl-3 flex items-center">
+<!-- Skeleton bar placeholder for text -->
+<span class="skeleton-box h-3.5 w-36 rounded-full"></span>
+</div>
+</div>
+<!-- Input: Normal / Focused Simulated -->
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="skeleton-box h-2.5 w-20 rounded-full"></span>
+<span class="text-[10px] text-brand-primary font-bold">تركيز (Focus)</span>
+</div>
+<div class="w-full bg-white border-2 border-brand-primary rounded-xl py-2.5 px-3 flex items-center shadow-sm">
+<span class="skeleton-box h-3.5 w-44 rounded-full"></span>
+</div>
+</div>
+<!-- Input: Error State -->
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="skeleton-box h-2.5 w-24 rounded-full"></span>
+<span class="text-[10px] text-red-600 font-bold">حالة خطأ (Error)</span>
+</div>
+<div class="w-full bg-red-50/30 border border-red-400 rounded-xl py-2.5 px-3 flex items-center">
+<span class="skeleton-box h-3.5 w-32 rounded-full bg-red-100"></span>
+</div>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+<span class="skeleton-box h-2 w-28 rounded-full bg-red-100"></span>
+</div>
+</div>
+<!-- Dropdown Skeleton -->
+<div class="w-full bg-[#FFFDF9] border border-brand-border rounded-xl py-3 px-3.5 flex items-center justify-between">
+<span class="skeleton-box h-3.5 w-28 rounded-full"></span>
+<svg class="w-4 h-4 text-brand-dark/50 stroke-current stroke-2 fill-none" viewbox="0 0 24 24">
+<polyline points="6 9 12 15 18 9"></polyline>
+</svg>
+</div>
+<!-- Textarea Skeleton -->
+<div class="w-full bg-[#FFFDF9] border border-brand-border rounded-xl p-3 space-y-2">
+<span class="skeleton-box h-3 w-4/5 rounded-full block"></span>
+<span class="skeleton-box h-3 w-3/5 rounded-full block"></span>
+<span class="skeleton-box h-3 w-2/5 rounded-full block"></span>
+</div>
+</div>
+</section>
+<!-- END: FormInputsSection -->
+<!-- SECTION 5: Chips & Badges -->
+<!-- BEGIN: BadgesSection -->
+<section class="bg-brand-card rounded-2xl p-4 border border-brand-border shadow-warm-sm" data-purpose="badges-system">
+<div class="flex items-center justify-between mb-3 border-b border-brand-border pb-2">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-brand-gold"></span>
+<h2 class="font-bold text-sm text-brand-dark">5. الشارات والتصنيفات (Chips 999px)</h2>
+</div>
+<span class="text-[10px] text-brand-dark/50 font-mono">BADGES</span>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<!-- Active Chip Skeleton -->
+<div class="px-3.5 py-1.5 rounded-full bg-brand-primary flex items-center gap-2 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-white"></span>
+<span class="h-2.5 w-12 bg-white/80 rounded-full inline-block"></span>
+</div>
+<!-- Inactive Chip Skeleton -->
+<div class="px-3.5 py-1.5 rounded-full bg-[#FFF3DF] border border-brand-border flex items-center gap-2">
+<span class="skeleton-box w-2 h-2 rounded-full"></span>
+<span class="skeleton-box h-2.5 w-14 rounded-full"></span>
+</div>
+<!-- Golden Featured Badge -->
+<div class="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#D6AD55] to-[#E5C278] text-[#392719] flex items-center gap-1.5 shadow-sm">
+<svg class="w-3.5 h-3.5 fill-current text-white" viewbox="0 0 24 24">
+<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+</svg>
+<span class="h-2.5 w-16 bg-[#392719]/40 rounded-full inline-block"></span>
+</div>
+<!-- Small Outline Badge -->
+<div class="px-3 py-1 rounded-full border border-brand-border bg-white flex items-center gap-1.5">
+<span class="skeleton-box h-2 w-10 rounded-full"></span>
+</div>
+</div>
+</section>
+<!-- END: BadgesSection -->
+<!-- SECTION 6: Star Rating System -->
+<!-- BEGIN: RatingSection -->
+<section class="bg-brand-card rounded-2xl p-4 border border-brand-border shadow-warm-sm" data-purpose="rating-system">
+<div class="flex items-center justify-between mb-3 border-b border-brand-border pb-2">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-brand-gold"></span>
+<h2 class="font-bold text-sm text-brand-dark">6. مكوّن تقييم النجوم الذهبية (#D6AD55)</h2>
+</div>
+<span class="text-[10px] text-brand-dark/50 font-mono">STARS</span>
+</div>
+<div class="p-3 bg-[#FFFDF9] rounded-xl border border-brand-border flex items-center justify-between">
+<!-- 5 Stars pure gold, no text/number -->
+<div class="flex items-center gap-1 text-brand-gold">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg class="w-5 h-5 text-brand-border fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<!-- Skeleton representation of reviews count -->
+<div class="flex items-center gap-1.5">
+<span class="skeleton-box h-3 w-8 rounded-full"></span>
+<span class="skeleton-box h-3 w-12 rounded-full"></span>
+</div>
+</div>
+</section>
+<!-- END: RatingSection -->
+<!-- SECTION 7: Skeleton Cards System -->
+<!-- BEGIN: SkeletonCardsSection -->
+<section class="space-y-4" data-purpose="skeleton-cards">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-brand-primary"></span>
+<h2 class="font-bold text-sm text-brand-dark">7. نماذج البطاقات الهيكلية (Strict Skeleton Cards)</h2>
+</div>
+<span class="text-[10px] text-brand-dark/50 font-mono">NO TEXT / NO NUM</span>
+</div>
+<!-- 1. Restaurant / Venue Card Skeleton -->
+<article class="bg-brand-card rounded-2xl border border-brand-border overflow-hidden shadow-warm-md" data-purpose="restaurant-card-skeleton">
+<!-- Image Box Placeholder -->
+<div class="relative w-full h-44 skeleton-box">
+<!-- Floating Category Badge Placeholder -->
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
+<span class="skeleton-box w-2.5 h-2.5 rounded-full"></span>
+<span class="skeleton-box h-2.5 w-12 rounded-full"></span>
+</div>
+<!-- Floating Bookmark Icon -->
+<div class="absolute top-3 left-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-brand-dark/40 shadow-sm">
+<svg class="w-4 h-4 fill-none stroke-current stroke-2" viewbox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+</div>
+</div>
+<!-- Card Body Content Skeleton -->
+<div class="p-4 space-y-3">
+<div class="flex items-center justify-between">
+<!-- Place Title Bar -->
+<span class="skeleton-box h-4 w-40 rounded-full"></span>
+<!-- Dash/Mini pill for distance -->
+<span class="skeleton-box h-3 w-10 rounded-full"></span>
+</div>
+<!-- Subtitle / Categories -->
+<div class="flex items-center gap-2">
+<span class="skeleton-box h-3 w-16 rounded-full"></span>
+<span class="w-1 h-1 rounded-full bg-brand-border"></span>
+<span class="skeleton-box h-3 w-20 rounded-full"></span>
+</div>
+<!-- Golden Stars & Price Dash -->
+<div class="pt-2 border-t border-brand-border/60 flex items-center justify-between">
+<!-- Golden Stars Pure -->
+<div class="flex items-center gap-0.5 text-brand-gold">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+<!-- Price Bar/Indicator -->
+<span class="skeleton-box h-3.5 w-14 rounded-full"></span>
+</div>
+</div>
+</article>
+<!-- 2. Dish / Food Item Card Horizontal Skeleton -->
+<article class="bg-brand-card rounded-2xl p-3 border border-brand-border flex items-center gap-3 shadow-warm-sm" data-purpose="dish-card-skeleton">
+<!-- Food Image Thumbnail -->
+<div class="w-20 h-20 rounded-xl skeleton-box flex-shrink-0"></div>
+<!-- Dish Info Skeleton -->
+<div class="flex-1 space-y-2">
+<span class="skeleton-box h-3.5 w-28 rounded-full block"></span>
+<span class="skeleton-box h-2.5 w-40 rounded-full block"></span>
+<div class="flex items-center justify-between pt-1">
+<!-- Dash for Price -->
+<span class="skeleton-box h-3.5 w-12 rounded-full"></span>
+<div class="flex items-center gap-1 text-brand-gold">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<span class="skeleton-box h-2.5 w-6 rounded-full"></span>
+</div>
+</div>
+</div>
+</article>
+<!-- 3. User Review / Critique Card Skeleton -->
+<article class="bg-brand-card rounded-2xl p-4 border border-brand-border shadow-warm-sm space-y-3" data-purpose="review-card-skeleton">
+<!-- User Profile Line -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<!-- Avatar Circle -->
+<div class="w-10 h-10 rounded-full skeleton-box flex-shrink-0"></div>
+<div class="space-y-1">
+<!-- User Name Bar -->
+<span class="skeleton-box h-3 w-24 rounded-full block"></span>
+<!-- Time bar -->
+<span class="skeleton-box h-2 w-14 rounded-full block"></span>
+</div>
+</div>
+<!-- Golden Stars on Review -->
+<div class="flex items-center gap-0.5 text-brand-gold">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+</div>
+</div>
+<!-- Review Text Paragraph Bars -->
+<div class="space-y-1.5 pt-1">
+<span class="skeleton-box h-2.5 w-full rounded-full block"></span>
+<span class="skeleton-box h-2.5 w-11/12 rounded-full block"></span>
+<span class="skeleton-box h-2.5 w-3/4 rounded-full block"></span>
+</div>
+</article>
+</section>
+<!-- END: SkeletonCardsSection -->
+<!-- SECTION 8: Iconography System -->
+<!-- BEGIN: IconographySection -->
+<section class="bg-brand-card rounded-2xl p-4 border border-brand-border shadow-warm-sm" data-purpose="iconography-system">
+<div class="flex items-center justify-between mb-3 border-b border-brand-border pb-2">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-brand-primary"></span>
+<h2 class="font-bold text-sm text-brand-dark">8. مكتبة الأيقونات الموحدة (#392719)</h2>
+</div>
+<span class="text-[10px] text-brand-dark/50 font-mono">ICONS</span>
+</div>
+<div class="grid grid-cols-4 gap-3 text-center">
+<!-- Home -->
+<div class="p-2.5 rounded-xl bg-[#FFFDF9] border border-brand-border flex flex-col items-center justify-center gap-1.5">
+<svg class="w-5 h-5 text-brand-dark stroke-current stroke-2 fill-none" viewbox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+<span class="text-[10px] font-tajawal text-brand-dark/70">الرئيسية</span>
+</div>
+<!-- Search / Map -->
+<div class="p-2.5 rounded-xl bg-[#FFFDF9] border border-brand-border flex flex-col items-center justify-center gap-1.5">
+<svg class="w-5 h-5 text-brand-dark stroke-current stroke-2 fill-none" viewbox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+<span class="text-[10px] font-tajawal text-brand-dark/70">البحث</span>
+</div>
+<!-- Location -->
+<div class="p-2.5 rounded-xl bg-[#FFFDF9] border border-brand-border flex flex-col items-center justify-center gap-1.5">
+<svg class="w-5 h-5 text-brand-dark stroke-current stroke-2 fill-none" viewbox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+<span class="text-[10px] font-tajawal text-brand-dark/70">الخريطة</span>
+</div>
+<!-- Bookmark / Saved -->
+<div class="p-2.5 rounded-xl bg-[#FFFDF9] border border-brand-border flex flex-col items-center justify-center gap-1.5">
+<svg class="w-5 h-5 text-brand-dark stroke-current stroke-2 fill-none" viewbox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+<span class="text-[10px] font-tajawal text-brand-dark/70">المحفوظات</span>
+</div>
+<!-- Rating Star -->
+<div class="p-2.5 rounded-xl bg-[#FFFDF9] border border-brand-border flex flex-col items-center justify-center gap-1.5">
+<svg class="w-5 h-5 text-brand-gold stroke-current stroke-2 fill-none" viewbox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+<span class="text-[10px] font-tajawal text-brand-dark/70">التقييم</span>
+</div>
+<!-- User Profile -->
+<div class="p-2.5 rounded-xl bg-[#FFFDF9] border border-brand-border flex flex-col items-center justify-center gap-1.5">
+<svg class="w-5 h-5 text-brand-dark stroke-current stroke-2 fill-none" viewbox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+<span class="text-[10px] font-tajawal text-brand-dark/70">حسابي</span>
+</div>
+<!-- Camera -->
+<div class="p-2.5 rounded-xl bg-[#FFFDF9] border border-brand-border flex flex-col items-center justify-center gap-1.5">
+<svg class="w-5 h-5 text-brand-dark stroke-current stroke-2 fill-none" viewbox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+<span class="text-[10px] font-tajawal text-brand-dark/70">الكاميرا</span>
+</div>
+<!-- Filter -->
+<div class="p-2.5 rounded-xl bg-[#FFFDF9] border border-brand-border flex flex-col items-center justify-center gap-1.5">
+<svg class="w-5 h-5 text-brand-dark stroke-current stroke-2 fill-none" viewbox="0 0 24 24"><line x1="4" x2="4" y1="21" y2="14"></line><line x1="4" x2="4" y1="10" y2="3"></line><line x1="12" x2="12" y1="21" y2="12"></line><line x1="12" x2="12" y1="8" y2="3"></line><line x1="20" x2="20" y1="21" y2="16"></line><line x1="20" x2="20" y1="12" y2="3"></line><line x1="1" x2="7" y1="14" y2="14"></line><line x1="9" x2="15" y1="8" y2="8"></line><line x1="17" x2="23" y1="16" y2="16"></line></svg>
+<span class="text-[10px] font-tajawal text-brand-dark/70">فلترة</span>
+</div>
+</div>
+</section>
+<!-- END: IconographySection -->
+<!-- Spacing buffer before sticky bottom navigation bar preview -->
+<div class="h-10"></div>
+</main>
+<!-- END: SystemContent -->
+<!-- BEGIN: BottomNavigationPreview -->
+<!-- Sticky iOS Bottom Navigation Bar with Prominent Floating Action Button -->
+<div class="sticky bottom-0 left-0 right-0 z-50 bg-white border-t border-brand-border shadow-warm-lg" data-purpose="bottom-navigation-bar">
+<!-- 5-Item Navigation Layout -->
+<nav class="relative flex items-center justify-around px-2 pt-2 pb-6">
+<!-- 1. Home Tab -->
+<button aria-label="الرئيسية" class="flex flex-col items-center gap-1 flex-1 text-brand-primary" type="button">
+<svg class="w-6 h-6 stroke-current stroke-2 fill-none" viewbox="0 0 24 24">
+<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+<polyline points="9 22 9 12 15 12 15 22"></polyline>
+</svg>
+<span class="h-1.5 w-5 bg-brand-primary rounded-full"></span>
+</button>
+<!-- 2. Search / Map Tab -->
+<button aria-label="استكشاف" class="flex flex-col items-center gap-1 flex-1 text-brand-dark/50 hover:text-brand-dark" type="button">
+<svg class="w-6 h-6 stroke-current stroke-2 fill-none" viewbox="0 0 24 24">
+<circle cx="11" cy="11" r="8"></circle>
+<line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+</svg>
+<span class="h-1.5 w-4 skeleton-box rounded-full"></span>
+</button>
+<!-- 3. Central Prominent Rating Button (Floating Action) -->
+<div class="flex-1 flex justify-center -mt-7">
+<button aria-label="إضافة تقييم جديد" class="w-14 h-14 rounded-full bg-[#F4770B] text-white flex items-center justify-center shadow-warm-fab border-4 border-white active:scale-95 transition-transform" type="button">
+<!-- Plus / Star Icon Inside Orange Action Button -->
+<svg class="w-7 h-7 stroke-current stroke-2 fill-none" viewbox="0 0 24 24">
+<line x1="12" x2="12" y1="5" y2="19"></line>
+<line x1="5" x2="19" y1="12" y2="12"></line>
+</svg>
+</button>
+</div>
+<!-- 4. Saved / Favorites Tab -->
+<button aria-label="المحفوظات" class="flex flex-col items-center gap-1 flex-1 text-brand-dark/50 hover:text-brand-dark" type="button">
+<svg class="w-6 h-6 stroke-current stroke-2 fill-none" viewbox="0 0 24 24">
+<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+</svg>
+<span class="h-1.5 w-4 skeleton-box rounded-full"></span>
+</button>
+<!-- 5. Profile Tab -->
+<button aria-label="الملف الشخصي" class="flex flex-col items-center gap-1 flex-1 text-brand-dark/50 hover:text-brand-dark" type="button">
+<svg class="w-6 h-6 stroke-current stroke-2 fill-none" viewbox="0 0 24 24">
+<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+<circle cx="12" cy="7" r="4"></circle>
+</svg>
+<span class="h-1.5 w-4 skeleton-box rounded-full"></span>
+</button>
+</nav>
+<!-- iOS Home Indicator bar -->
+<div class="w-32 h-1 bg-brand-dark/20 rounded-full mx-auto mb-1"></div>
+</div>
+<!-- END: BottomNavigationPreview -->
+</div>
+<!-- END: MobileContainer -->
+</body></html>
