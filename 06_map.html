@@ -1,259 +1,74 @@
 <!DOCTYPE html>
-
-<html dir="rtl" lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>عرض الأماكن على الخريطة - بيستاهل BISTAHEL</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>الخريطة - بيستاهل BISTAHEL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'IBM Plex Sans Arabic', sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #FFF3DF;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    /* Mobile Container 390x844 */
-    .mobile-frame {
-      width: 390px;
-      height: 844px;
-      position: relative;
-      background-color: #FFF3DF;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 25px 50px -12px rgba(57, 39, 25, 0.25);
-    }
-    /* Hide scrollbars */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-  </style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:#FFF3DF}
+body{font-family:'IBM Plex Sans Arabic','Noto Sans Arabic','DejaVu Sans',sans-serif;color:#392719;direction:rtl;display:flex;justify-content:center}
+.screen{width:390px;height:844px;background:#FFF3DF;position:relative;display:flex;flex-direction:column;overflow:hidden}
+.grow{flex:1}
+.sk{display:inline-block;background:#DCD0BF}.sk2{display:inline-block;background:#EADFCC}
+.row{display:flex;align-items:center}.col{display:flex;flex-direction:column}
+.ib{border:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(57,39,25,.10);flex:none;cursor:pointer}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(57,39,25,.07)}
+.h2{font-size:16px;font-weight:700;line-height:24px}
+.link{font-size:12px;font-weight:600;color:#F4770B;display:inline-flex;align-items:center;gap:2px}
+.stars{display:inline-flex;align-items:center}
+.svb{position:absolute;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center}
+.chips{display:flex;gap:8px;overflow:hidden;padding:2px 16px}
+.chip{height:32px;padding:0 16px;border-radius:999px;background:#fff;border:1px solid rgba(57,39,25,.14);display:flex;align-items:center;flex:none}
+.chip.on{background:#F4770B;border-color:#F4770B;box-shadow:0 2px 6px rgba(244,119,11,.25)}
+.chip.on i{background:rgba(255,255,255,.85)}
+.hscroll{display:flex;gap:12px;overflow:hidden;padding:2px 16px 6px}
+.pc{width:148px;flex:none;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(57,39,25,.07);overflow:hidden}
+.pc .img{position:relative;height:104px;background:#D8CEBF}
+.pc .b{padding:10px 10px 12px;display:flex;flex-direction:column;gap:7px}
+.hc{display:flex;gap:12px;padding:10px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(57,39,25,.07);align-items:stretch}
+.hc .img{position:relative;width:84px;height:84px;border-radius:10px;background:#D8CEBF;flex:none}
+.hc .b{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:2px 0}
+.dc{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(57,39,25,.07);padding:8px}
+.dc .img{position:relative;height:112px;border-radius:10px;background:#D8CEBF}
+.dc .b{display:flex;flex-direction:column;gap:7px;padding:10px 2px 4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px}
+.nav{position:sticky;bottom:0;height:68px;background:#fff;border-top:1px solid rgba(57,39,25,.08);box-shadow:0 -4px 12px rgba(57,39,25,.05);display:flex;align-items:center;justify-content:space-around;padding:0 8px;z-index:9;flex:none}
+.nav .it{width:48px;height:48px;display:flex;align-items:center;justify-content:center;color:rgba(57,39,25,.42)}
+.nav .it.on{color:#F4770B}
+.nav .fab{width:56px;height:56px;border-radius:50%;background:#F4770B;border:4px solid #fff;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-26px;box-shadow:0 6px 16px rgba(244,119,11,.4)}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-size:13px;font-weight:600}
+.inp{height:46px;border-radius:12px;border:1px solid #EBDDC6;background:#FFFCF6;display:flex;align-items:center;justify-content:space-between;padding:0 14px}
+.btn{height:50px;border:0;border-radius:999px;background:#F4770B;color:#fff;font-family:inherit;font-size:15px;font-weight:700;box-shadow:0 6px 16px rgba(244,119,11,.28);width:100%}
+.btn.out{background:#fff;color:#F4770B;border:1.5px solid #F4770B;box-shadow:none;height:44px;font-size:14px}
+.deco1{position:absolute;top:-96px;right:-96px;width:288px;height:288px;border-radius:50%;background:#D6AD55;opacity:.08}
+.deco2{position:absolute;bottom:-110px;left:-110px;width:320px;height:320px;border-radius:50%;background:#D6AD55;opacity:.08}
+.logo{border-radius:50%;background:#DCD0BF;border:1.5px solid #D6AD55}
+.tabs{display:flex;background:#fff;margin:0 16px;border-radius:12px;box-shadow:0 2px 10px rgba(57,39,25,.07)}
+.tab{flex:1;text-align:center;padding:12px 0 10px;font-size:14px;font-weight:600;color:rgba(57,39,25,.5);border-bottom:3px solid transparent}
+.tab.on{color:#F4770B;border-bottom-color:#F4770B}
+.bbar{position:sticky;bottom:0;background:rgba(255,255,255,.94);box-shadow:0 -4px 20px rgba(57,39,25,.08);padding:12px 16px;display:flex;gap:12px;align-items:center;z-index:9;flex:none}
+.bbar .btn{flex:1;height:48px}
+.hero{position:relative;height:220px;background:#D8CEBF;flex:none}
+.hero .t{position:absolute;top:16px;left:16px;right:16px;display:flex;justify-content:space-between}
+.dots{position:absolute;bottom:22px;left:0;right:0;display:flex;justify-content:center;gap:6px}
+.dots b{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.7)}.dots b.on{width:22px;border-radius:99px;background:#F4770B}
+.info{margin:-12px 16px 0;padding:16px;position:relative;z-index:2;display:flex;flex-direction:column;gap:12px}
+.rv{padding:14px;display:flex;flex-direction:column;gap:12px}
+.pill{display:inline-block;background:#fff;border:1px solid #EBDDC6;border-radius:999px}
+.tl{position:relative;padding:0 16px;display:flex;flex-direction:column;gap:14px}
+.tl:before{content:"";position:absolute;right:35px;top:20px;bottom:20px;width:2px;background:#E6D7BD}
+.tli{display:flex;gap:12px;align-items:flex-start;position:relative}
+.dot{width:40px;height:40px;border-radius:50%;background:#fff;border:2px solid #F9C79A;display:flex;align-items:center;justify-content:center;color:#F4770B;flex:none;z-index:2}
+</style>
 </head>
-<body class="bg-[#FFF3DF] text-[#392719]">
-<!-- Mobile Screen Container (390 x 844) -->
-<main class="mobile-frame relative select-none">
-<!-- 1. FULL BACKGROUND: Simplified Stylized Architectural Map (SVG + Geometric Shapes) -->
-<div class="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0 bg-[#FBF6ED]"><svg class="w-full h-full" fill="none" preserveaspectratio="xMidYMid slice" viewbox="0 0 390 844" xmlns="http://www.w3.org/2000/svg"><rect fill="#FAF4E8" height="844" width="390"></rect><path d="M-20 180 C40 160 110 200 120 270 C130 330 70 380 -10 390 Z" fill="#E5ECE0" opacity="0.9"></path><path d="M260 70 C310 60 380 90 410 130 C415 190 350 230 300 210 C250 190 220 110 260 70 Z" fill="#EAF0E2" opacity="0.85"></path><path d="M290 520 C340 500 400 530 420 590 C410 670 330 710 280 670 C240 640 250 540 290 520 Z" fill="#E8EFE2" opacity="0.9"></path><path d="M-10 680 C60 670 110 710 100 780 C80 840 0 860 -20 830 Z" fill="#E5EDE1" opacity="0.85"></path><g fill="#EFE5D3"><rect height="40" rx="3" width="34" x="25" y="80"></rect><rect height="36" rx="3" width="28" x="65" y="82"></rect><rect height="28" rx="3" width="36" x="22" y="128"></rect><rect height="32" rx="3" width="32" x="64" y="125"></rect><rect height="32" rx="3" width="40" x="170" y="85"></rect><rect height="28" rx="3" width="32" x="216" y="88"></rect><rect height="36" rx="3" width="34" x="174" y="124"></rect><rect height="38" rx="3" width="38" x="214" y="122"></rect><rect height="32" rx="3" width="42" x="28" y="295"></rect><rect height="30" rx="3" width="38" x="28" y="334"></rect><rect height="34" rx="3" width="36" x="26" y="410"></rect><rect height="30" rx="3" width="32" x="68" y="415"></rect><rect height="28" rx="3" width="40" x="28" y="452"></rect><rect height="34" rx="3" width="26" x="74" y="452"></rect><rect height="32" rx="3" width="38" x="280" y="240"></rect><rect height="28" rx="3" width="44" x="324" y="238"></rect><rect height="34" rx="3" width="42" x="282" y="280"></rect><rect height="38" rx="3" width="40" x="330" y="274"></rect><rect height="30" rx="3" width="36" x="300" y="345"></rect><rect height="32" rx="3" width="34" x="342" y="340"></rect><rect height="34" rx="3" width="32" x="304" y="382"></rect><rect height="36" rx="3" width="38" x="342" y="378"></rect><rect height="34" rx="3" width="42" x="270" y="440"></rect><rect height="38" rx="3" width="36" x="318" y="435"></rect><rect height="32" rx="3" width="38" x="272" y="482"></rect><rect height="34" rx="3" width="40" x="316" y="480"></rect><rect height="38" rx="3" width="34" x="145" y="235"></rect><rect height="34" rx="3" width="36" x="185" y="230"></rect><rect height="36" rx="3" width="32" x="148" y="280"></rect><rect height="35" rx="3" width="38" x="186" y="272"></rect><rect height="32" rx="3" width="38" x="140" y="450"></rect><rect height="30" rx="3" width="34" x="184" y="454"></rect><rect height="36" rx="3" width="34" x="142" y="490"></rect><rect height="32" rx="3" width="40" x="182" y="492"></rect><rect height="34" rx="3" width="38" x="30" y="540"></rect><rect height="30" rx="3" width="32" x="74" y="545"></rect><rect height="36" rx="3" width="34" x="32" y="582"></rect><rect height="34" rx="3" width="36" x="72" y="582"></rect><rect height="34" rx="3" width="36" x="140" y="630"></rect><rect height="32" rx="3" width="38" x="182" y="625"></rect><rect height="36" rx="3" width="34" x="138" y="672"></rect><rect height="34" rx="3" width="42" x="178" y="665"></rect></g><g stroke="#DFD4BD" stroke-linecap="round" stroke-linejoin="round"><path d="M-20 240 L120 240 M220 240 L410 240" stroke-width="19"></path><path d="M-20 460 C100 450 250 470 410 450" stroke-width="17"></path><path d="M170 -20 C180 200 160 550 170 864" stroke-width="19"></path><path d="M-20 620 C120 600 270 630 410 610" stroke-width="15"></path><path d="M260 -20 C270 200 250 500 270 864" stroke-width="13"></path><path d="M110 -20 L110 864" stroke-width="11"></path><path d="M-20 160 L410 160" stroke-width="11"></path><path d="M-20 375 L410 375" stroke-width="11"></path><path d="M-20 520 L410 520" stroke-width="10"></path><path d="M-20 730 L410 730" stroke-width="10"></path><circle cx="170" cy="240" fill="#FFFDF9" r="26" stroke-width="8"></circle><circle cx="270" cy="460" fill="#FFFDF9" r="20" stroke-width="7"></circle></g><g stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round"><path d="M-20 240 L120 240 M220 240 L410 240" stroke-width="15"></path><path d="M-20 460 C100 450 250 470 410 450" stroke-width="13"></path><path d="M170 -20 C180 200 160 550 170 864" stroke-width="15"></path><path d="M-20 620 C120 600 270 630 410 610" stroke-width="11"></path><path d="M260 -20 C270 200 250 500 270 864" stroke-width="9"></path><path d="M110 -20 L110 864" stroke-width="7"></path><path d="M-20 160 L410 160" stroke-width="7"></path><path d="M-20 375 L410 375" stroke-width="7"></path><path d="M-20 520 L410 520" stroke-width="6"></path><path d="M-20 730 L410 730" stroke-width="6"></path></g><circle cx="170" cy="240" fill="#E5ECE0" r="14" stroke="#DFD4BD" stroke-width="2"></circle><circle cx="270" cy="460" fill="#FAF4E8" r="10" stroke="#DFD4BD" stroke-width="2"></circle></svg></div>
-<!-- 4. MAP PINS (6 Blank Orange Pins + 1 Selected Larger Pin with Gold Border #D6AD55) -->
-<div class="absolute inset-0 pointer-events-none z-10"><!-- Standard Pin 1 (Top-Right) -->
-<div class="absolute" style="top: 220px; right: 75px;">
-<div class="relative flex flex-col items-center">
-<svg class="w-7 h-9 drop-shadow-[0_4px_6px_rgba(57,39,25,0.25)]" fill="none" viewbox="0 0 28 36"><path d="M14 1.5C7.096 1.5 1.5 7.096 1.5 14C1.5 22.8 14 34.5 14 34.5C14 34.5 26.5 22.8 26.5 14C26.5 7.096 20.904 1.5 14 1.5Z" fill="#F4770B" stroke="#FFFFFF" stroke-width="2"></path></svg>
-<div class="w-3 h-1 bg-[#392719]/20 rounded-full blur-[1px] -mt-1"></div>
-</div>
-</div>
-<!-- Standard Pin 2 (Center-Left) -->
-<div class="absolute" style="top: 290px; right: 290px;">
-<div class="relative flex flex-col items-center">
-<svg class="w-7 h-9 drop-shadow-[0_4px_6px_rgba(57,39,25,0.25)]" fill="none" viewbox="0 0 28 36"><path d="M14 1.5C7.096 1.5 1.5 7.096 1.5 14C1.5 22.8 14 34.5 14 34.5C14 34.5 26.5 22.8 26.5 14C26.5 7.096 20.904 1.5 14 1.5Z" fill="#F4770B" stroke="#FFFFFF" stroke-width="2"></path></svg>
-<div class="w-3 h-1 bg-[#392719]/20 rounded-full blur-[1px] -mt-1"></div>
-</div>
-</div>
-<!-- SELECTED PIN: Larger, centered, prominent with #D6AD55 gold border and subtle glow -->
-<div class="absolute" style="top: 395px; right: 170px; transform: translate(50%, -50%);">
-<div class="relative flex flex-col items-center animate-bounce" style="animation-duration: 2.5s;">
-<svg class="w-11 h-14 drop-shadow-[0_8px_14px_rgba(57,39,25,0.25)]" fill="none" viewbox="0 0 36 46"><path d="M18 2C9.163 2 2 9.163 2 18C2 29.5 18 43.5 18 43.5C18 43.5 34 29.5 34 18C34 9.163 26.837 2 18 2Z" fill="#F4770B" stroke="#FFFFFF" stroke-width="3"></path><path d="M18 4C10.268 4 4 10.268 4 18C4 28 18 40.5 18 40.5C18 40.5 32 28 32 18C32 10.268 25.732 4 18 4Z" fill="none" stroke="#D6AD55" stroke-width="2"></path></svg>
-<div class="w-5 h-1.5 bg-[#392719]/30 rounded-full blur-[1.5px] -mt-1.5"></div>
-</div>
-</div>
-<!-- Standard Pin 3 (Mid-Right) -->
-<div class="absolute" style="top: 480px; right: 75px;">
-<div class="relative flex flex-col items-center">
-<svg class="w-7 h-9 drop-shadow-[0_4px_6px_rgba(57,39,25,0.25)]" fill="none" viewbox="0 0 28 36"><path d="M14 1.5C7.096 1.5 1.5 7.096 1.5 14C1.5 22.8 14 34.5 14 34.5C14 34.5 26.5 22.8 26.5 14C26.5 7.096 20.904 1.5 14 1.5Z" fill="#F4770B" stroke="#FFFFFF" stroke-width="2"></path></svg>
-<div class="w-3 h-1 bg-[#392719]/20 rounded-full blur-[1px] -mt-1"></div>
-</div>
-</div>
-<!-- Standard Pin 4 (Lower-Center) -->
-<div class="absolute" style="top: 540px; right: 220px;">
-<div class="relative flex flex-col items-center">
-<svg class="w-7 h-9 drop-shadow-[0_4px_6px_rgba(57,39,25,0.25)]" fill="none" viewbox="0 0 28 36"><path d="M14 1.5C7.096 1.5 1.5 7.096 1.5 14C1.5 22.8 14 34.5 14 34.5C14 34.5 26.5 22.8 26.5 14C26.5 7.096 20.904 1.5 14 1.5Z" fill="#F4770B" stroke="#FFFFFF" stroke-width="2"></path></svg>
-<div class="w-3 h-1 bg-[#392719]/20 rounded-full blur-[1px] -mt-1"></div>
-</div>
-</div></div>
-<!-- 2 & 3. FLOATING TOP HEADER CONTROLS (Search Bar, Back Arrow, Filter, Filter Badges, Toggle Buttons) -->
-<header class="relative z-20 pt-4 px-4 flex flex-col gap-2.5 pointer-events-auto">
-<!-- Row: Back Arrow + Wide Search Bar with Filter Icon inside -->
-<div class="flex items-center gap-2.5">
-<!-- Back Arrow Button (Right side in RTL) -->
-<button aria-label="رجوع" class="w-10 h-10 rounded-full bg-white text-[#392719] flex items-center justify-center shadow-[0_2px_8px_rgba(57,39,25,0.08)] active:scale-95 transition-transform shrink-0">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24">
-<path d="m9 18 6-6-6-6"></path>
-</svg>
-</button>
-<!-- Search Input Bar with 'ابحث' only -->
-<div class="flex-1 h-11 bg-white rounded-full flex items-center px-3.5 shadow-[0_2px_8px_rgba(57,39,25,0.08)] border border-[#392719]/5">
-<!-- Search Icon (Right side in RTL) -->
-<svg class="w-4 h-4 text-[#392719]/40 ml-2 shrink-0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24">
-<circle cx="11" cy="11" r="8"></circle>
-<path d="m21 21-4.3-4.3"></path>
-</svg>
-<!-- 'ابحث' text only -->
-<span class="flex-1 text-[13px] font-normal text-[#392719]/50 select-none">ابحث</span>
-<!-- Filter Icon (Left side in RTL) -->
-<button aria-label="تصفية" class="w-7 h-7 flex items-center justify-center text-[#392719]/60 hover:text-[#F4770B] transition-colors">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
-<path d="M21 4H3"></path>
-<path d="M10 12H3"></path>
-<path d="M18 12H14"></path>
-<path d="M6 20H3"></path>
-<path d="M21 20H10"></path>
-<circle cx="12" cy="12" r="2"></circle>
-<circle cx="17" cy="4" r="2"></circle>
-<circle cx="8" cy="20" r="2"></circle>
-</svg>
-</button>
-</div>
-</div>
-<!-- 3. Horizontal Scrollable Filter Badges (One active in orange, rest with light border, empty bars inside, no words) -->
-<div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5 -mx-4 px-4">
-<!-- Active Badge (Orange #F4770B, empty skeleton bar inside, NO words) -->
-<div class="h-8 px-4 rounded-full bg-[#F4770B] flex items-center justify-center shrink-0 shadow-[0_2px_6px_rgba(244,119,11,0.25)]">
-<div class="w-10 h-2 bg-white/80 rounded-full"></div>
-</div>
-<!-- Inactive Badge 2 -->
-<div class="h-8 px-4 rounded-full bg-white/95 border border-[#392719]/15 flex items-center justify-center shrink-0 shadow-[0_2px_5px_rgba(57,39,25,0.04)]">
-<div class="w-12 h-2 bg-[#D5CBBD] rounded-full"></div>
-</div>
-<!-- Inactive Badge 3 -->
-<div class="h-8 px-4 rounded-full bg-white/95 border border-[#392719]/15 flex items-center justify-center shrink-0 shadow-[0_2px_5px_rgba(57,39,25,0.04)]">
-<div class="w-9 h-2 bg-[#D5CBBD] rounded-full"></div>
-</div>
-<!-- Inactive Badge 4 -->
-<div class="h-8 px-4 rounded-full bg-white/95 border border-[#392719]/15 flex items-center justify-center shrink-0 shadow-[0_2px_5px_rgba(57,39,25,0.04)]">
-<div class="w-11 h-2 bg-[#D5CBBD] rounded-full"></div>
-</div>
-<!-- Inactive Badge 5 -->
-<div class="h-8 px-4 rounded-full bg-white/95 border border-[#392719]/15 flex items-center justify-center shrink-0 shadow-[0_2px_5px_rgba(57,39,25,0.04)]">
-<div class="w-8 h-2 bg-[#D5CBBD] rounded-full"></div>
-</div>
-<!-- Inactive Badge 6 -->
-<div class="h-8 px-4 rounded-full bg-white/95 border border-[#392719]/15 flex items-center justify-center shrink-0 shadow-[0_2px_5px_rgba(57,39,25,0.04)]">
-<div class="w-10 h-2 bg-[#D5CBBD] rounded-full"></div>
-</div>
-</div>
-<!-- 7. TOP-LEFT TOGGLE BUTTONS (Under the badges): List & Map (Map is active) -->
-</header>
-<!-- 5. FLOATING CONTROLS ON LEFT SIDE: My Location (Target icon) & Zoom (+ / -) -->
-<!-- In RTL, Left side is screen-start (end in LTR) -->
-<aside class="absolute left-4 top-[245px] z-20 flex flex-col gap-2.5 pointer-events-auto">
-<!-- "موقعي" (Target / GPS icon) -->
-<button aria-label="موقعي" class="w-10 h-10 rounded-full bg-white text-[#392719] flex items-center justify-center shadow-[0_3px_10px_rgba(57,39,25,0.12)] border border-[#392719]/5 active:scale-95 transition-transform">
-<svg class="w-5 h-5 text-[#F4770B]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24">
-<circle cx="12" cy="12" r="10"></circle>
-<line x1="22" x2="18" y1="12" y2="12"></line>
-<line x1="6" x2="2" y1="12" y2="12"></line>
-<line x1="12" x2="12" y1="6" y2="2"></line>
-<line x1="12" x2="12" y1="22" y2="18"></line>
-<circle cx="12" cy="12" fill="#F4770B" r="3"></circle>
-</svg>
-</button>
-<!-- "تكبير/تصغير" (Zoom In / Zoom Out combined pill) -->
-<button aria-label="عرض القائمة" class="w-10 h-10 rounded-full bg-white text-[#392719] flex items-center justify-center shadow-[0_3px_10px_rgba(57,39,25,0.12)] border border-[#392719]/5 active:scale-95 transition-transform shrink-0"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24"><line x1="8" x2="21" y1="6" y2="6"></line><line x1="8" x2="21" y1="12" y2="12"></line><line x1="8" x2="21" y1="18" y2="18"></line><line x1="3" x2="3.01" y1="6" y2="6"></line><line x1="3" x2="3.01" y1="12" y2="12"></line><line x1="3" x2="3.01" y1="18" y2="18"></line></svg></button></aside>
-<!-- Spacer to keep layout balanced -->
-<div class="flex-1"></div>
-<!-- 6. BOTTOM CARD: Floating Selected Place Card Above Bottom Nav (White, 12px corners, soft brown shadow) -->
-<section class="relative z-20 px-4 pb-3 pointer-events-auto">
-<div class="w-full bg-white rounded-[12px] p-3 shadow-[0_8px_20px_rgba(57,39,25,0.12)] border border-[#392719]/5 flex gap-3.5 items-center">
-<!-- Place Image Square (Warm gray skeleton square on right in RTL) with bookmark save button -->
-<div class="w-24 h-24 rounded-[10px] bg-[#D8CEBF] relative shrink-0 overflow-hidden">
-<!-- Bookmark Save Button on corner of image -->
-<button aria-label="حفظ" class="absolute top-1.5 left-1.5 w-6 h-6 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-[#392719]/70 shadow-sm">
-<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24">
-<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
-</svg>
-</button>
-</div>
-<!-- Place Details (Three skeleton text bars + 5 golden stars without numbers) -->
-<div class="flex-1 flex flex-col justify-between h-24 py-0.5">
-<!-- Text Bar 1 (Title placeholder) -->
-<div class="w-3/4 h-3.5 bg-[#D8CEBF] rounded-full"></div>
-<!-- Text Bar 2 (Subtitle/Category placeholder) -->
-<div class="w-1/2 h-2.5 bg-[#E6DEC4] rounded-full"></div>
-<!-- Text Bar 3 (Address/Tag placeholder) -->
-<div class="w-2/3 h-2 bg-[#E6DEC4] rounded-full"></div>
-<!-- 5 Golden Empty Stars (#D6AD55) without any number -->
-<div class="flex items-center gap-1 pt-1">
-<!-- Star 1 -->
-<svg class="w-4 h-4 text-[#D6AD55]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
-<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-</svg>
-<!-- Star 2 -->
-<svg class="w-4 h-4 text-[#D6AD55]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
-<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-</svg>
-<!-- Star 3 -->
-<svg class="w-4 h-4 text-[#D6AD55]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
-<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-</svg>
-<!-- Star 4 -->
-<svg class="w-4 h-4 text-[#D6AD55]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
-<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-</svg>
-<!-- Star 5 -->
-<svg class="w-4 h-4 text-[#D6AD55]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
-<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-</svg>
-</div>
-</div>
-</div>
-</section>
-<!-- 8. FIXED BOTTOM NAVIGATION BAR: 5 Icons, Orange '+' in Center, No text, Search tab active -->
-<nav class="relative z-30 w-full h-[68px] bg-white border-t border-[#392719]/10 px-4 flex items-center justify-between shadow-[0_-4px_12px_rgba(57,39,25,0.05)] shrink-0">
-<!-- Item 1: Home (Inactive) -->
-<button aria-label="الرئيسية" class="flex flex-col items-center justify-center w-12 h-12 text-[#392719]/40 hover:text-[#392719] transition-colors">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
-<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-<polyline points="9 22 9 12 15 12 15 22"></polyline>
-</svg>
-</button>
-<!-- Item 2: Search (ACTIVE in Orange #F4770B) -->
-<button aria-label="البحث" class="flex flex-col items-center justify-center w-12 h-12 text-[#F4770B] transition-colors">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" viewbox="0 0 24 24">
-<circle cx="11" cy="11" r="8"></circle>
-<path d="m21 21-4.3-4.3"></path>
-</svg>
-</button>
-<!-- Item 3: Center Elevated Orange '+' Button -->
-<div class="relative -top-4 flex items-center justify-center">
-<button aria-label="إضافة تقييم" class="w-14 h-14 rounded-full bg-[#F4770B] text-white flex items-center justify-center shadow-[0_6px_16px_rgba(244,119,11,0.4)] border-4 border-white active:scale-95 transition-transform">
-<svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" viewbox="0 0 24 24">
-<line x1="12" x2="12" y1="5" y2="19"></line>
-<line x1="5" x2="19" y1="12" y2="12"></line>
-</svg>
-</button>
-</div>
-<!-- Item 4: Bookmarks / Saved (Inactive) -->
-<button aria-label="المحفوظات" class="flex flex-col items-center justify-center w-12 h-12 text-[#392719]/40 hover:text-[#392719] transition-colors">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
-<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
-</svg>
-</button>
-<!-- Item 5: Profile / Account (Inactive) -->
-<button aria-label="حسابي" class="flex flex-col items-center justify-center w-12 h-12 text-[#392719]/40 hover:text-[#392719] transition-colors">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
-<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-<circle cx="12" cy="7" r="4"></circle>
-</svg>
-</button>
-</nav>
+<body>
+<main class="screen" data-screen="الخريطة">
+<svg width="390" height="844" viewBox="0 0 390 844" style="position:absolute;inset:0"><rect width=390 height=844 fill=#FBF3E6 /><path d="M0 250C50 240 90 280 80 340L0 350Z" fill="#E7EAD6"/><path d="M390 60C340 70 320 120 350 170L390 180Z" fill="#E7EAD6"/><path d="M390 560C350 540 320 590 340 650L390 660Z" fill="#E7EAD6"/><rect x="20" y="70" width="60" height="50" rx="6" fill="#EFE3CE"/><rect x="98" y="120" width="50" height="40" rx="6" fill="#EFE3CE"/><rect x="24" y="200" width="70" height="60" rx="6" fill="#EFE3CE"/><rect x="110" y="210" width="60" height="46" rx="6" fill="#EFE3CE"/><rect x="206" y="70" width="70" height="44" rx="6" fill="#EFE3CE"/><rect x="290" y="86" width="62" height="64" rx="6" fill="#EFE3CE"/><rect x="300" y="196" width="76" height="56" rx="6" fill="#EFE3CE"/><rect x="210" y="208" width="60" height="44" rx="6" fill="#EFE3CE"/><rect x="22" y="360" width="56" height="60" rx="6" fill="#EFE3CE"/><rect x="100" y="372" width="66" height="48" rx="6" fill="#EFE3CE"/><rect x="206" y="360" width="70" height="54" rx="6" fill="#EFE3CE"/><rect x="300" y="356" width="64" height="66" rx="6" fill="#EFE3CE"/><rect x="24" y="500" width="64" height="56" rx="6" fill="#EFE3CE"/><rect x="100" y="512" width="60" height="50" rx="6" fill="#EFE3CE"/><rect x="214" y="500" width="62" height="60" rx="6" fill="#EFE3CE"/><rect x="296" y="504" width="70" height="50" rx="6" fill="#EFE3CE"/><rect x="24" y="640" width="70" height="56" rx="6" fill="#EFE3CE"/><rect x="104" y="650" width="54" height="46" rx="6" fill="#EFE3CE"/><rect x="214" y="646" width="64" height="52" rx="6" fill="#EFE3CE"/><rect x="304" y="650" width="60" height="46" rx="6" fill="#EFE3CE"/><rect x="28" y="744" width="60" height="60" rx="6" fill="#EFE3CE"/><rect x="300" y="742" width="66" height="70" rx="6" fill="#EFE3CE"/><rect x="-4" y="143.0" width="398" height="14" fill="#E6D7BD"/><rect x="-4" y="321.0" width="398" height="18" fill="#E6D7BD"/><rect x="-4" y="473.0" width="398" height="14" fill="#E6D7BD"/><rect x="-4" y="601.0" width="398" height="18" fill="#E6D7BD"/><rect x="-4" y="703.0" width="398" height="14" fill="#E6D7BD"/><rect x="85.0" y="-4" width="14" height="852" fill="#E6D7BD"/><rect x="179.0" y="-4" width="22" height="852" fill="#E6D7BD"/><rect x="277.0" y="-4" width="14" height="852" fill="#E6D7BD"/><rect x="-4" y="145.0" width="398" height="10" fill="#FFFFFF"/><rect x="-4" y="323.0" width="398" height="14" fill="#FFFFFF"/><rect x="-4" y="475.0" width="398" height="10" fill="#FFFFFF"/><rect x="-4" y="603.0" width="398" height="14" fill="#FFFFFF"/><rect x="-4" y="705.0" width="398" height="10" fill="#FFFFFF"/><rect x="87.0" y="-4" width="10" height="852" fill="#FFFFFF"/><rect x="181.0" y="-4" width="18" height="852" fill="#FFFFFF"/><rect x="279.0" y="-4" width="10" height="852" fill="#FFFFFF"/><circle cx="190" cy="330" r="30" fill="#E6D7BD"/><circle cx="190" cy="330" r="20" fill="#FFFFFF"/><circle cx="190" cy="330" r="11" fill="#E7EAD6"/></svg><svg style="position:absolute;left:251.0px;top:198px;filter:drop-shadow(0 3px 3px rgba(57,39,25,.28))" width="34" height="34" viewBox="0 0 24 24"><path d="M12 22.5s7.5-6.4 7.5-12.3a7.5 7.5 0 1 0-15 0c0 5.9 7.5 12.3 7.5 12.3z" fill="#F4770B" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="10" r="2.8" fill="#FFF3DF"/></svg><svg style="position:absolute;left:69.0px;top:256px;filter:drop-shadow(0 3px 3px rgba(57,39,25,.28))" width="34" height="34" viewBox="0 0 24 24"><path d="M12 22.5s7.5-6.4 7.5-12.3a7.5 7.5 0 1 0-15 0c0 5.9 7.5 12.3 7.5 12.3z" fill="#F4770B" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="10" r="2.8" fill="#FFF3DF"/></svg><svg style="position:absolute;left:251.0px;top:464px;filter:drop-shadow(0 3px 3px rgba(57,39,25,.28))" width="34" height="34" viewBox="0 0 24 24"><path d="M12 22.5s7.5-6.4 7.5-12.3a7.5 7.5 0 1 0-15 0c0 5.9 7.5 12.3 7.5 12.3z" fill="#F4770B" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="10" r="2.8" fill="#FFF3DF"/></svg><svg style="position:absolute;left:133.0px;top:486px;filter:drop-shadow(0 3px 3px rgba(57,39,25,.28))" width="34" height="34" viewBox="0 0 24 24"><path d="M12 22.5s7.5-6.4 7.5-12.3a7.5 7.5 0 1 0-15 0c0 5.9 7.5 12.3 7.5 12.3z" fill="#F4770B" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="10" r="2.8" fill="#FFF3DF"/></svg><svg style="position:absolute;left:201.0px;top:349px;filter:drop-shadow(0 3px 3px rgba(57,39,25,.28))" width="46" height="46" viewBox="0 0 24 24"><path d="M12 22.5s7.5-6.4 7.5-12.3a7.5 7.5 0 1 0-15 0c0 5.9 7.5 12.3 7.5 12.3z" fill="#F4770B" stroke="#D6AD55" stroke-width="2.4"/><circle cx="12" cy="10" r="2.8" fill="#FFF3DF"/></svg><div class="col" style="position:absolute;left:16px;top:130px;gap:10px;z-index:3"><button class="ib" style="width:40px;height:40px;background:#fff;color:#F4770B"><svg class="" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button><button class="ib" style="width:40px;height:40px;background:#fff;color:#392719"><svg class="" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></button></div><div style="position:relative;z-index:2;display:flex;flex-direction:column;flex:1"><div class="row" style="gap:10px;padding:16px 16px 10px;position:relative"><button class="ib" style="width:40px;height:40px;background:#fff;color:#392719"><svg class="" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><div class="row grow" style="height:44px;background:#fff;border-radius:999px;padding:0 14px;gap:8px;box-shadow:0 2px 8px rgba(57,39,25,.08)"><svg class="" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="rgba(57,39,25,.45)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span style="font-size:13px;color:rgba(57,39,25,.5);flex:1">ابحث</span><span style="color:rgba(57,39,25,.6)"><svg class="" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H3M10 12H3M18 12h-4M6 20H3M21 20H10"/><circle cx="12" cy="12" r="2"/><circle cx="17" cy="4" r="2"/><circle cx="8" cy="20" r="2"/></svg></span></div></div><div class="chips"><div class="chip on"><i class="sk" style="width:48px;height:8px;border-radius:999px;"></i></div><div class="chip "><i class="sk" style="width:56px;height:8px;border-radius:999px;"></i></div><div class="chip "><i class="sk" style="width:40px;height:8px;border-radius:999px;"></i></div><div class="chip "><i class="sk" style="width:52px;height:8px;border-radius:999px;"></i></div><div class="chip "><i class="sk" style="width:36px;height:8px;border-radius:999px;"></i></div><div class="chip "><i class="sk" style="width:46px;height:8px;border-radius:999px;"></i></div></div><div class="grow"></div><div style="position:relative;padding:0 16px 14px;margin-top:auto"><div class="hc"><div class="img"><span class="svb" style="left:6px;top:6px"><svg class="" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#392719" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></span></div><div class="b"><div class="col" style="gap:8px"><i class="sk" style="width:85%;height:11px;border-radius:999px;"></i><i class="sk2" style="width:60%;height:9px;border-radius:999px;"></i><i class="sk2" style="width:75%;height:8px;border-radius:999px;"></i></div><div class="row" style="justify-content:space-between"><span class="stars" style="gap:2px"><svg class="" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D6AD55" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D6AD55" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D6AD55" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D6AD55" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D6AD55" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span></div></div></div></div></div><nav class="nav"><div class="it "><svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="it on"><svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div><div class="fab"><svg class="" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div><div class="it "><svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div><div class="it "><svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div></nav>
 </main>
 </body>
 </html>
