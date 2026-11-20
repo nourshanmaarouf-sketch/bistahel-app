@@ -89,5 +89,21 @@ body{font-family:'IBM Plex Sans Arabic','Noto Sans Arabic','DejaVu Sans',sans-se
 <div class="bbar"><button class="btn">نشر التقييم</button></div>
 
 </main>
+<script data-nav>
+(function(){
+const $=(s,r=document)=>[...r.querySelectorAll(s)];
+const FB='04_home';
+const go=(el,to)=>{if(!el)return;el.style.cursor='pointer';el.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();
+ if(to==='back'){if(history.length>1&&document.referrer)history.back();else location.href=FB+'.html';}else location.href=to+'.html';});};
+const goAll=(els,to)=>els.forEach(e=>go(e,to));
+const T=(sel,t,up)=>$(sel).filter(e=>e.textContent.trim()===t).map(e=>up?e.closest(up)||e:e);
+const withPath=(sel,frag)=>$(sel).filter(e=>e.innerHTML.includes(frag));
+const BACK='M5 12h14M12 5l7 7-7 7', XI='M18 6 6 18M6 6l12 12';
+const back=()=>withPath('.ib',BACK)[0];
+const nav=$('.nav > *');
+if(nav.length===5){['04_home','05_search','11_add_review','13_profile_saved','12_profile_reviews'].forEach((t,i)=>go(nav[i],t));}
+go(back(),'back');
+goAll($('.bbar .btn'),'19_review_published');go(withPath('.ib',XI)[0],'back');})();
+</script>
 </body>
 </html>
