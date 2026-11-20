@@ -1,0 +1,59 @@
+/* بيستاهل – BISTAHEL | Design Tokens v1.5
+   المصدر الوحيد للقيم. أي شاشة أو مكوّن برمجي يجب أن يستخدم هذه المتغيرات فقط. */
+:root {
+  /* الهوية (ثابتة) */
+  --color-primary: #F4770B;
+  --color-gold: #D6AD55;
+  --color-ivory: #FFF3DF;
+  --color-ink: #392719;
+
+  /* حالات */
+  --color-primary-pressed: #D86300;
+  --color-primary-disabled: #FDEBD9;
+  --color-error: #C8372D;
+  --color-error-tint: #FBE5E2;
+  --color-surface: #FFFFFF;
+
+  /* محايدة دافئة (مشتقة) */
+  --color-skeleton: #DCD0BF;
+  --color-skeleton-light: #EADFCC;
+  --color-image-placeholder: #D8CEBF;
+  --color-border: #EBDDC6;
+  --color-line: #E6D7BD;
+  --color-divider: #F3E9D8;
+  --color-divider-strong: #F0E4D2;
+  --color-input-fill: #FFFCF6;
+  --color-tint: #FFF8EC;
+  --color-handle: #D9CBB4;
+
+  /* خريطة */
+  --map-land: #FBF3E6;
+  --map-block: #EFE3CE;
+  --map-park: #E7EAD6;
+
+  /* خط */
+  --font-family: 'IBM Plex Sans Arabic', 'Noto Sans Arabic', sans-serif;
+  --fs-title: 28px;   --fw-title: 700;
+  --fs-heading: 18px; --fw-heading: 700;
+  --fs-section: 16px; --fw-section: 700;
+  --fs-body: 14px;    --fw-body: 500;
+  --fs-caption: 12px; --fw-caption: 400;
+
+  /* أبعاد */
+  --screen-width: 390px;
+  --screen-height: 844px;
+  --margin: 16px;
+  --radius-card: 12px;
+  --radius-input: 12px;
+  --radius-pill: 999px;
+  --radius-sheet: 24px;
+  --tap-min: 44px;
+  --nav-height: 68px;
+  --button-height: 50px;
+
+  /* ظلال */
+  --shadow-card: 0 2px 10px rgba(57, 39, 25, .07);
+  --shadow-float: 0 2px 8px rgba(57, 39, 25, .10);
+  --shadow-primary: 0 6px 16px rgba(244, 119, 11, .28);
+  --shadow-sheet: 0 -8px 30px rgba(57, 39, 25, .20);
+}
