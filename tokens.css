@@ -1,4 +1,4 @@
-/* بيستاهل – BISTAHEL | Design Tokens v1.5
+/* بيستاهل – BISTAHEL | Design Tokens v1.7
    المصدر الوحيد للقيم. أي شاشة أو مكوّن برمجي يجب أن يستخدم هذه المتغيرات فقط. */
 :root {
   /* الهوية (ثابتة) */
@@ -6,6 +6,12 @@
   --color-gold: #D6AD55;
   --color-ivory: #FFF3DF;
   --color-ink: #392719;
+
+  /* إتاحة (WCAG AA) – مشتقة */
+  --color-primary-strong: #BF5500;   /* خلفية الأزرار + نص أبيض (4.65) */
+  --color-primary-text: #B45000;     /* نص/روابط برتقالية على فاتح (4.7+) */
+  --color-gold-strong: #B8892E;      /* النجوم على الأبيض (3.2) */
+  --color-ink-muted: rgba(57, 39, 25, .66); /* نص ثانوي (4.4+) */
 
   /* حالات */
   --color-primary-pressed: #D86300;
