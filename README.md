@@ -36,7 +36,12 @@
 | 17 | إضافة تقييم – معبّأة | 17_add_review_filled.html | 17_add_review_filled.png | حالة تفاعلية (نجوم مختارة، حقول مفعّلة) |
 | 18 | تسجيل الدخول – خطأ | 18_login_error.html | 18_login_error.png | حالة خطأ في حقل |
 | 19 | تم نشر التقييم | 19_review_published.html | 19_review_published.png | شاشة تأكيد |
+| 20 | الرئيسية – تحميل | 20_home_loading.html | 20_home_loading.png | حالة تحميل (Skeleton متحرك) |
+| 21 | لا يوجد اتصال | 21_no_connection.html | 21_no_connection.png | حالة خطأ شبكة |
+| 22 | المكان – لا توجد آراء | 22_place_no_reviews.html | 22_place_no_reviews.png | حالة فارغة |
+| 23 | تصفية النتائج | 23_filter_sheet.html | 23_filter_sheet.png | ورقة سفلية (Bottom sheet) |
+| 24 | تأكيد الحذف | 24_confirm_delete.html | 24_confirm_delete.png | نافذة تأكيد |
 
 ملاحظة: صور الشاشات المبنية مباشرة مولَّدة بخط احتياطي، والخط الحقيقي يظهر عند فتح ملفات HTML مع اتصال بالإنترنت.
 
-الشاشات 15–19 هي حالات (فارغة، تفاعلية، خطأ، تأكيد). نصوصها رسائل واجهة فقط وليست بيانات تجريبية.
+الشاشات 15–24 هي حالات (فارغة، تفاعلية، خطأ، تأكيد). نصوصها رسائل واجهة فقط وليست بيانات تجريبية.
