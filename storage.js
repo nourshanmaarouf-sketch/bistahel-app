@@ -3,12 +3,12 @@
 (function(){
   var KEY='bistahel_db_v1',subs=[];
   function load(){try{return JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){return {};}}
-  function save(d){try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}}
+  function save(d){try{localStorage.setItem(KEY,JSON.stringify(d));return true;}catch(e){return false;}}
   var mem=load();
   function snap(p){var ds=Object.keys(mem).filter(function(k){return k.indexOf(p+'/')===0&&k.slice(p.length+1).indexOf('/')<0;}).map(function(k){var v=mem[k];return {id:k.slice(p.length+1),data:function(){return JSON.parse(JSON.stringify(v));}};});return {docs:ds};}
   function fire(path){var p=path.slice(0,path.lastIndexOf('/'));subs.forEach(function(s){if(s.p===p)s.cb(snap(p));});}
   function docref(path){return {
-    set:function(d){mem[path]=JSON.parse(JSON.stringify(d));save(mem);fire(path);return Promise.resolve();},
+    set:function(d){var old=mem[path];mem[path]=JSON.parse(JSON.stringify(d));if(!save(mem)){if(old===undefined)delete mem[path];else mem[path]=old;return Promise.reject(new Error('quota'));}fire(path);return Promise.resolve();},
     delete:function(){delete mem[path];save(mem);fire(path);return Promise.resolve();}};}
   function coll(p){return {doc:function(id){return docref(p+'/'+id);},onSnapshot:function(cb){var s={p:p,cb:cb};subs.push(s);setTimeout(function(){cb(snap(p));},0);return function(){subs=subs.filter(function(x){return x!==s;});};}};}
   addEventListener('storage',function(e){if(e.key===KEY){mem=load();subs.forEach(function(s){s.cb(snap(s.p));});}});
