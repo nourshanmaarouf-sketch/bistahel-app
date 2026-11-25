@@ -112,6 +112,56 @@ select.inp{appearance:none;background-image:none}
 .lb img{max-width:100%;max-height:90dvh;border-radius:10px}
 .leaflet-container{z-index:0;font-family:inherit}
 .dotsr{display:flex;justify-content:center;gap:6px}.dotsr i{width:8px;height:8px;border-radius:50%;background:#E6D7BD}.dotsr i.on{width:24px;border-radius:99px;background:var(--orange)}
+
+/* ===== صقل بصري v2.5 ===== */
+:root{--r:16px;--sh1:0 1px 2px rgba(57,39,25,.05),0 6px 18px rgba(57,39,25,.07);--sh2:0 2px 6px rgba(57,39,25,.06),0 16px 36px rgba(57,39,25,.13)}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-feature-settings:"tnum" 1,"kern" 1;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.55}
+::selection{background:rgba(244,119,11,.25)}
+.screen.anim{animation:vin .32s cubic-bezier(.2,.8,.2,1)}
+@keyframes vin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.h2{font-size:17px;line-height:26px;font-weight:700}
+.sech{display:flex;align-items:center;gap:9px}.sech:before{content:"";width:4px;height:20px;border-radius:4px;background:linear-gradient(var(--orange),var(--gold))}
+.nm{font-size:15px;line-height:22px}
+.small{line-height:18px}
+.card{border-radius:var(--r);box-shadow:var(--sh1)}
+.pc,.hc,.opt,button.card{transition:transform .16s ease,box-shadow .16s ease}
+.pc:active,.hc:active,.opt:active,button.card:active{transform:scale(.98)}
+.pc{width:172px;border-radius:var(--r);box-shadow:var(--sh1)}
+.hc{border-radius:var(--r);box-shadow:var(--sh1);padding:12px}
+.pc .img,.hc .img,.hero{background:radial-gradient(circle at 80% 20%,rgba(255,255,255,.55),transparent 45%),linear-gradient(135deg,#F8E6C8,#EBCB93)}
+.pc .img{height:116px;position:relative}.hc .img{border-radius:12px;width:92px;height:92px;position:relative}
+.img svg{opacity:.8}
+.badge{position:absolute;top:8px;right:8px;display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,.96);border-radius:999px;padding:3px 9px 3px 7px;font-size:12px;font-weight:700;box-shadow:0 2px 8px rgba(57,39,25,.18);z-index:2}
+.nav{height:calc(72px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.93);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}
+.nav button{flex-direction:column;gap:3px;width:68px;height:60px;font-size:11px;font-weight:600;position:relative;border-radius:12px;transition:color .15s}
+.nav button.on{font-weight:700}
+.nav button.on:before{content:"";position:absolute;top:-6px;width:30px;height:3px;border-radius:0 0 4px 4px;background:var(--orange-strong)}
+.nav .fab{width:58px;height:58px;margin-top:-30px;border-radius:50%;box-shadow:0 10px 24px rgba(244,119,11,.45);transition:transform .15s}.nav .fab:active{transform:scale(.94)}
+.btn{box-shadow:0 8px 20px rgba(191,85,0,.28),inset 0 1px 0 rgba(255,255,255,.2);transition:transform .12s ease,box-shadow .12s}
+.btn:active:not(:disabled){transform:scale(.985)}
+.btn.out{box-shadow:none}
+.chip{transition:background .15s,color .15s,border-color .15s;box-shadow:0 1px 2px rgba(57,39,25,.04)}
+.star-btn svg{transition:transform .14s cubic-bezier(.3,1.6,.5,1)}.star-btn:active svg{transform:scale(1.3)}
+.tb{position:sticky;top:0;z-index:20;background:rgba(255,243,223,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.hero{height:236px}
+.hero.has:after{height:110px}
+.info{border-radius:20px;box-shadow:var(--sh2);margin-top:-28px}
+.bar{height:9px}.bar i{background:linear-gradient(to left,var(--orange),var(--gold))}
+.avatar{background:linear-gradient(135deg,#FBE9C8,#F2D59C);color:#6B4C0E}
+.tabs{border-radius:var(--r);box-shadow:var(--sh1);overflow:hidden}
+.tab{transition:color .15s}
+.empty .circle{box-shadow:0 0 0 10px rgba(244,119,11,.07),0 0 0 22px rgba(244,119,11,.04)}
+.ov{animation:fade .2s ease}.sheet{animation:up .3s cubic-bezier(.2,.8,.2,1)}.dlg{animation:pop .22s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+@keyframes pop{from{transform:scale(.92);opacity:0}to{transform:none;opacity:1}}
+.toast{animation:vin .24s ease;box-shadow:0 10px 30px rgba(57,39,25,.3)}
+.splash-logo{animation:pop .7s cubic-bezier(.2,.9,.3,1.15) both}
+.searchbar{height:50px;border-radius:999px;background:#fff;border:0;box-shadow:var(--sh1);padding:0 18px;gap:10px;color:var(--muted);width:100%;transition:box-shadow .15s}
+.searchbar:active{box-shadow:var(--sh2)}
+.catb .c{transition:transform .15s,box-shadow .15s}.catb:active .c{transform:scale(.94)}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}}
 </style>
 
 </head>
@@ -154,11 +204,11 @@ function starsRow(v,size){var r=Math.round(v),h='';for(var i=0;i<5;i++){h+=ic('s
 function ratingLine(score,n,size){if(!n)return '<span class="small muted">لا تقييمات بعد</span>';return '<span class="row" style="gap:6px">'+starsRow(score,size||13)+'<span class="sc">'+fmt(score)+'</span><span class="small muted">('+n+')</span></span>';}
 function ibtn(act,icon,attrs,bg,color){return '<button class="ib" data-act="'+act+'" '+(attrs||'')+' aria-label="'+E(icon)+'" style="'+(bg?'background:'+bg+';':'')+(color?'color:'+color:'')+'">'+ic(icon,20)+'</button>';}
 function backBtn(){return '<button class="ib" data-act="back" aria-label="رجوع">'+ic('back',20)+'</button>';}
-function topbar(title,right){return '<div class="row" style="justify-content:space-between;padding:16px"><div class="row" style="gap:12px">'+backBtn()+'<span style="font-size:18px;font-weight:700">'+E(title)+'</span></div>'+(right||'')+'</div>';}
+function topbar(title,right){return '<div class="row tb" style="justify-content:space-between;padding:16px"><div class="row" style="gap:12px">'+backBtn()+'<span style="font-size:19px;font-weight:700">'+E(title)+'</span></div>'+(right||'')+'</div>';}
 function empty(icon,title,sub,btn){return '<div class="empty"><div class="circle">'+ic(icon,40,'currentColor',1.8)+'</div><b>'+E(title)+'</b><p>'+E(sub)+'</p>'+(btn||'')+'</div>';}
-function nav(active){var items=[['home','home'],['search','search'],['fab','plus'],['me-saved','bookmark'],['me','user']];
- return '<nav class="nav" aria-label="التنقل">'+items.map(function(it){if(it[0]==='fab')return '<button class="fab" data-act="fab" aria-label="إضافة">'+ic('plus',26,'#fff',2.6)+'</button>';var on=(active===it[0]);return '<button class="'+(on?'on':'')+'" data-go="'+it[0]+'" aria-label="'+it[0]+'"'+(on?' aria-current="page"':'')+'>'+ic(it[1],24)+'</button>';}).join('')+'</nav>';}
-function placeCard(p){var st=placeStats(p.id),c=catOf(p.cat);return '<button class="pc" data-go="place-'+E(p.id)+'"><div class="img">'+(p.photo?'<img src="'+E(p.photo)+'" alt="" loading="lazy">':ic(c.i,40,'currentColor',1.5))+'</div><div class="b"><span class="nm">'+E(p.name)+'</span><span class="small muted">'+E(c.n)+(distTxt(p)?' · '+distTxt(p):'')+'</span>'+ratingLine(st.score,st.n,12)+'</div></button>';}
+function nav(active){var items=[['home','home','الرئيسية'],['search','search','بحث'],['fab','plus'],['me-saved','bookmark','المحفوظات'],['me','user','حسابي']];
+ return '<nav class="nav" aria-label="التنقل">'+items.map(function(it){if(it[0]==='fab')return '<button class="fab" data-act="fab" aria-label="إضافة">'+ic('plus',26,'#fff',2.6)+'</button>';var on=(active===it[0]);return '<button class="'+(on?'on':'')+'" data-go="'+it[0]+'" aria-label="'+it[2]+'"'+(on?' aria-current="page"':'')+'>'+ic(it[1],23,'currentColor',on?2.3:1.9)+'<span>'+it[2]+'</span></button>';}).join('')+'</nav>';}
+function placeCard(p){var st=placeStats(p.id),c=catOf(p.cat);return '<button class="pc" data-go="place-'+E(p.id)+'"><div class="img">'+(p.photo?'<img src="'+E(p.photo)+'" alt="" loading="lazy">':ic(c.i,40,'currentColor',1.5))+(st.n?'<span class="badge">'+ic('star',12,'#B8892E',1.8,'#B8892E')+fmt(st.score)+'</span>':'')+'</div><div class="b"><span class="nm">'+E(p.name)+'</span><span class="small muted">'+E(c.n)+(distTxt(p)?' · '+distTxt(p):'')+'</span>'+ratingLine(st.score,st.n,12)+'</div></button>';}
 function placeRow(p){var st=placeStats(p.id),c=catOf(p.cat);return '<button class="hc" data-go="place-'+E(p.id)+'"><div class="img">'+(p.photo?'<img src="'+E(p.photo)+'" alt="" loading="lazy">':ic(c.i,34,'currentColor',1.5))+'</div><div class="b"><div><div class="nm">'+E(p.name)+'</div><div class="small muted">'+E(c.n)+(distTxt(p)?' · '+distTxt(p):'')+(p.address?' · '+E(p.address):'')+'</div></div>'+ratingLine(st.score,st.n,13)+'</div></button>';}
 function dishCard(d){var st=dishStats(d.id);return '<button class="card" data-go="dish-'+E(d.id)+'" style="border:0;padding:8px;text-align:right;display:block"><div style="height:92px;border-radius:10px;background:#EFE3CE;display:flex;align-items:center;justify-content:center;color:var(--gold-strong);overflow:hidden">'+(d.photo?'<img src="'+E(d.photo)+'" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover">':ic('utensils',32,'currentColor',1.5))+'</div><div class="col" style="gap:6px;padding:10px 2px 4px"><span class="nm">'+E(d.name)+'</span>'+ratingLine(st.score,st.n,12)+'</div></button>';}
 function reviewCard(r,opts){opts=opts||{};var pl=placeById(r.placeId),dsh=r.dishId?dishById(r.dishId):null;
@@ -174,25 +224,25 @@ function loadingView(){var card='<div class="pc"><div class="img"></div><div cla
 function offlineView(msg){return '<div class="screen"><div class="grow" style="flex:.7"></div>'+empty('wifioff','تعذّر الاتصال بالبيانات',msg||'تحقق من اتصالك ثم افتح الصفحة مرة أخرى')+'<div class="grow"></div></div>';}
 
 /* ---------- الشاشات ---------- */
-function vSplash(){return '<div class="screen"><div class="deco1"></div><div class="deco2"></div><div class="grow" style="flex:1.1"></div><div class="col" style="align-items:center"><img src="logo-mark.png" alt="" width="144" height="144"><h1 style="margin-top:22px;font-size:36px;font-weight:700">بيستاهل</h1></div><div class="grow" style="flex:1.4"></div><div class="row" style="justify-content:center;gap:8px;margin-bottom:80px"><i class="" style="width:10px;height:10px;border-radius:50%;background:var(--orange)"></i><i style="width:10px;height:10px;border-radius:50%;background:var(--orange);opacity:.4"></i><i style="width:10px;height:10px;border-radius:50%;background:var(--orange);opacity:.4"></i></div></div>';}
+function vSplash(){return '<div class="screen"><div class="deco1"></div><div class="deco2"></div><div class="grow" style="flex:1.1"></div><div class="col" style="align-items:center"><img class="splash-logo" src="logo-mark.png" alt="" width="144" height="144"><h1 style="margin-top:22px;font-size:36px;font-weight:700">بيستاهل</h1></div><div class="grow" style="flex:1.4"></div><div class="row" style="justify-content:center;gap:8px;margin-bottom:80px"><i class="" style="width:10px;height:10px;border-radius:50%;background:var(--orange)"></i><i style="width:10px;height:10px;border-radius:50%;background:var(--orange);opacity:.4"></i><i style="width:10px;height:10px;border-radius:50%;background:var(--orange);opacity:.4"></i></div></div>';}
 var ONB=[{t:'اكتشف أفضل الأماكن',d:'ابحث عن المطاعم والمقاهي ومحلات الحلويات وشاهد تقييمات الناس',i:'search'},{t:'قيّم الطبق والمكان بشكل منفصل',d:'للطبق طعم وسعر، وللمكان خدمة ونظافة، فيكون التقييم أدق',i:'star'},{t:'احفظ أماكنك المفضلة',d:'احفظ ما يعجبك لتعود إليه بسهولة وشارك تجربتك مع الآخرين',i:'bookmark'}];
 function vOnb(){var i=S.onb||0,o=ONB[i];return '<div class="screen"><div class="deco1"></div><div class="deco2"></div><div class="row" style="padding:20px 16px"><button class="link" data-act="onbskip" style="font-size:14px">تخطي</button></div><div class="grow" style="flex:.5"></div><div class="col" style="align-items:center"><div style="width:220px;height:220px;border-radius:50%;background:#EFE3CE;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--orange-strong)">'+ic(o.i,84,'currentColor',1.4)+'</div></div><div class="col" style="align-items:center;text-align:center;gap:12px;padding:36px 32px 0"><span style="font-size:24px;font-weight:700">'+E(o.t)+'</span><span style="font-size:14px;line-height:24px" class="muted">'+E(o.d)+'</span></div><div class="grow"></div><div class="col" style="gap:22px;padding:0 16px 32px;position:relative"><div class="dotsr">'+ONB.map(function(_,k){return '<i class="'+(k===i?'on':'')+'"></i>';}).join('')+'</div><button class="btn" data-act="onbnext">'+(i===ONB.length-1?'ابدأ':'التالي')+'</button></div></div>';}
 
 function unreadCount(){var seen=LS.get('seen_notif',0);return notifs().filter(function(n){return n.ts>seen;}).length;}
 function notifs(){var mine={};S.places.forEach(function(p){if(p.by===S.uid)mine[p.id]=1;});return S.reviews.filter(function(r){return mine[r.placeId]&&r.by!==S.uid;}).sort(function(a,b){return b.ts-a.ts;});}
 function vHome(){
- var ps=S.places;var head='<div class="row" style="justify-content:space-between;padding:16px 16px 4px"><div class="row" style="gap:10px"><img src="logo-mark.png" alt="" width="40" height="40"><span style="font-size:18px;font-weight:700">بيستاهل</span></div><div class="row" style="gap:8px">'+(PAGES?'<button class="ib" data-go="map" aria-label="الخريطة">'+ic('map',20)+'</button>':'')+'<button class="ib" data-go="notif" aria-label="الإشعارات" style="position:relative">'+ic('bell',20)+(unreadCount()?'<i style="position:absolute;top:8px;left:10px;width:9px;height:9px;border-radius:50%;background:var(--orange);border:2px solid #fff"></i>':'')+'</button></div></div>';
- var sb='<div style="padding:12px 16px 10px"><button class="row" data-go="search" style="width:100%;height:46px;border-radius:999px;background:#fff;border:0;box-shadow:0 2px 8px rgba(57,39,25,.08);padding:0 16px;gap:10px;color:var(--muted)">'+ic('search',18)+'<span style="flex:1;text-align:right">ابحث عن مكان أو طبق</span>'+ic('filter',18)+'</button></div>';
- var cats='<div class="hscroll" style="gap:14px;padding:8px 16px 4px">'+CATS.map(function(c){return '<button data-act="cat" data-id="'+c.id+'" class="col" style="align-items:center;gap:8px;flex:none;background:none;border:0;width:64px"><span style="width:56px;height:56px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(57,39,25,.08);display:flex;align-items:center;justify-content:center;color:var(--orange-strong)">'+ic(c.i,26)+'</span><span style="font-size:12px;font-weight:600">'+c.n+'</span></button>';}).join('')+'</div>';
+ var ps=S.places;var head='<div class="row" style="justify-content:space-between;padding:16px 16px 4px"><div class="row" style="gap:10px"><img src="logo-mark.png" alt="" width="44" height="44"><div class="col"><span style="font-size:19px;font-weight:700;line-height:24px">بيستاهل</span><span class="small muted">وين رح تاكل اليوم؟</span></div></div><div class="row" style="gap:8px">'+(PAGES?'<button class="ib" data-go="map" aria-label="الخريطة">'+ic('map',20)+'</button>':'')+'<button class="ib" data-go="notif" aria-label="الإشعارات" style="position:relative">'+ic('bell',20)+(unreadCount()?'<i style="position:absolute;top:8px;left:10px;width:9px;height:9px;border-radius:50%;background:var(--orange);border:2px solid #fff"></i>':'')+'</button></div></div>';
+ var sb='<div style="padding:12px 16px 10px"><button class="row searchbar" data-go="search">'+ic('search',18)+'<span style="flex:1;text-align:right">ابحث عن مكان أو طبق</span>'+ic('filter',18)+'</button></div>';
+ var cats='<div class="hscroll" style="gap:14px;padding:8px 16px 4px">'+CATS.map(function(c){return '<button data-act="cat" data-id="'+c.id+'" class="col catb" style="align-items:center;gap:8px;flex:none;background:none;border:0;width:68px"><span class="c" style="width:58px;height:58px;border-radius:50%;background:#fff;box-shadow:var(--sh1);display:flex;align-items:center;justify-content:center;color:var(--orange-strong)">'+ic(c.i,26)+'</span><span style="font-size:12px;font-weight:600">'+c.n+'</span></button>';}).join('')+'</div>';
  var body='';
  if(!ps.length){body=empty('pin','لا توجد أماكن بعد','كن أول من يضيف مكاناً ويشارك تقييمه','<button class="btn" style="width:auto;padding:0 32px;margin-top:8px" data-go="addplace">إضافة مكان</button>');}
  else{var top=ps.filter(function(p){return placeStats(p.id).n>0;}).sort(function(a,b){return placeStats(b.id).score-placeStats(a.id).score;}).slice(0,10);
   var pop=ps.slice().sort(function(a,b){return placeStats(b.id).n-placeStats(a.id).n;}).filter(function(p){return placeStats(p.id).n>0;}).slice(0,10);
   var fresh=ps.slice().sort(function(a,b){return b.ts-a.ts;}).slice(0,10);
   var near='';
-  if(PAGES){if(S.pos){var nl=ps.filter(hasLoc).sort(function(a,b){return distKm(a)-distKm(b);}).slice(0,10);if(nl.length)near='<div class="col" style="gap:10px;margin-top:18px"><div class="row" style="justify-content:space-between;padding:0 16px"><span class="h2">قريب منك</span><button class="link" data-go="map">الخريطة '+ic('chevL',14)+'</button></div><div class="hscroll">'+nl.map(placeCard).join('')+'</div></div>';}
+  if(PAGES){if(S.pos){var nl=ps.filter(hasLoc).sort(function(a,b){return distKm(a)-distKm(b);}).slice(0,10);if(nl.length)near='<div class="col" style="gap:10px;margin-top:18px"><div class="row" style="justify-content:space-between;padding:0 16px"><span class="h2 sech">قريب منك</span><button class="link" data-go="map">الخريطة '+ic('chevL',14)+'</button></div><div class="hscroll">'+nl.map(placeCard).join('')+'</div></div>';}
    else if(navigator.geolocation)near='<div class="card row" style="margin:16px 16px 0;padding:14px;gap:12px"><span class="ico">'+ic('pin',20)+'</span><div class="col grow" style="gap:2px"><b>الأماكن القريبة منك</b><span class="small muted">اسمح بتحديد موقعك لعرضها</span></div><button class="btn" style="width:auto;height:40px;padding:0 18px;font-size:13px" data-act="locate">تفعيل</button></div>';}
-  var sec=function(t,list,sort){return list.length?'<div class="col" style="gap:10px;margin-top:18px"><div class="row" style="justify-content:space-between;padding:0 16px"><span class="h2">'+t+'</span><button class="link" data-act="seeall" data-sort="'+sort+'">عرض الكل '+ic('chevL',14)+'</button></div><div class="hscroll">'+list.map(placeCard).join('')+'</div></div>':'';};
+  var sec=function(t,list,sort){return list.length?'<div class="col" style="gap:10px;margin-top:18px"><div class="row" style="justify-content:space-between;padding:0 16px"><span class="h2 sech">'+t+'</span><button class="link" data-act="seeall" data-sort="'+sort+'">عرض الكل '+ic('chevL',14)+'</button></div><div class="hscroll">'+list.map(placeCard).join('')+'</div></div>':'';};
   body=near+sec('الأعلى تقييماً',top,'rating')+sec('الأكثر تقييماً',pop,'count')+sec('أُضيفت حديثاً',fresh,'new');}
  return '<div class="screen">'+head+sb+cats+body+'<div style="height:24px"></div>'+nav('home')+'</div>';}
 
@@ -312,6 +362,7 @@ function doRender(){var r=route(),a=document.activeElement;
  app.innerHTML=view()+(S.sheet==='fab'?fabSheet():'')+(S.sheet==='filter'?filterSheet():'')+(S.dlg?dialogDel():'')+(S.sheet==='photo'?photoSheet():'')+(S.zoom?'<div class="lb" data-act="unzoom"><img src="'+E(S.zoom)+'" alt=""></div>':'')+(S.toast?'<div class="toast" role="status">'+E(S.toast)+'</div>':'');
  if(S.keep){window.scrollTo(0,y);S.keep=false;}
  if(r.name==='notif'&&S.loaded.r)LS.set('seen_notif',Date.now()-1);
+ if(S.anim){var sc=app.firstElementChild;if(sc&&sc.classList.contains('screen'))sc.classList.add('anim');S.anim=false;}
  initMaps();resolveNames();}
 var nameBusy=false;
 function resolveNames(){if(!S.user||nameBusy)return;var ids={};S.reviews.forEach(function(x){if(!S.names[x.by])ids[x.by]=1;});var arr=Object.keys(ids).slice(0,32);if(!arr.length)return;nameBusy=true;
@@ -340,7 +391,7 @@ function initMaps(){killMaps();if(!window.L)return;
   if(S.pos)L.marker([S.pos.lat,S.pos.lng],{icon:meIcon(),interactive:false}).addTo(m3);
   m3.on('click',function(e){put(e.latlng.lat,e.latlng.lng);});}}
 function go(h){if(location.hash==='#'+h){render(true);return;}location.hash=h;}
-window.addEventListener('hashchange',function(){S.navCount++;S.sheet=null;S.dlg=null;if(route().name!=='add')S.draft=null;if(route().name!=='addplace'&&route().name!=='pickloc')S.pdraft=null;if(route().name!=='pickloc')S.pick=null;if(route().name!=='editprofile')S.edraft=null;S._force=true;window.scrollTo(0,0);render(true);});
+window.addEventListener('hashchange',function(){S.anim=true;S.navCount++;S.sheet=null;S.dlg=null;if(route().name!=='add')S.draft=null;if(route().name!=='addplace'&&route().name!=='pickloc')S.pdraft=null;if(route().name!=='pickloc')S.pick=null;if(route().name!=='editprofile')S.edraft=null;S._force=true;window.scrollTo(0,0);render(true);});
 
 /* ---------- الأفعال ---------- */
 var ACT={
