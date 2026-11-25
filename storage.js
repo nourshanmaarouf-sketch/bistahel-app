@@ -15,5 +15,6 @@
   var uid=(function(){try{var u=localStorage.getItem('bistahel_uid');if(!u){u='u'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);localStorage.setItem('bistahel_uid',u);}return u;}catch(e){return 'local';}})();
   var db={collection:coll,doc:docref};
   var user={id:function(){return Promise.resolve(uid);},me:function(){return Promise.resolve({name:'أنا'});},profiles:function(ids){var o={};ids.forEach(function(i){o[i]={name:i===uid?'أنا':'مستخدم'};});return Promise.resolve(o);},can:function(){return Promise.resolve(true);}};
+  window.__bistahelLocal=true;
   window.claude={use:function(n){return Promise.resolve(n==='db'?db:n==='user'?user:null);}};
 })();

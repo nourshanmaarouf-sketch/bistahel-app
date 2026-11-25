@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="بيستاهل">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
 <title>بيستاهل</title>
 <meta name="theme-color" content="#FFF3DF">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -109,12 +110,14 @@ select.inp{appearance:none;background-image:none}
 .pickprev .ib{position:absolute;top:8px;width:36px;height:36px;background:rgba(255,255,255,.95)}
 .lb{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px}
 .lb img{max-width:100%;max-height:90dvh;border-radius:10px}
+.leaflet-container{z-index:0;font-family:inherit}
 .dotsr{display:flex;justify-content:center;gap:6px}.dotsr i{width:8px;height:8px;border-radius:50%;background:#E6D7BD}.dotsr i.on{width:24px;border-radius:99px;background:var(--orange)}
 </style>
 
 </head>
 <body>
 <div id="app"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <script src="storage.js"></script>
 <script>
 (function(){
@@ -139,6 +142,11 @@ function placeStats(pid){var pr=S.reviews.filter(function(r){return r.placeId===
  var service=avg(pr.map(function(r){return r.s.service;})),clean=avg(pr.map(function(r){return r.s.clean;}));
  return {n:pr.length,score:pr.length?avg([service,clean]):0,service:service,clean:clean,taste:avg(dr.map(function(r){return r.s.taste;})),price:avg(dr.map(function(r){return r.s.price;})),dn:dr.length};}
 function dishStats(did){var dr=S.reviews.filter(function(r){return r.dishId===did&&r.kind==='dish';});var t=avg(dr.map(function(r){return r.s.taste;})),p=avg(dr.map(function(r){return r.s.price;}));return {n:dr.length,taste:t,price:p,score:dr.length?avg([t,p]):0};}
+var PAGES=!!window.__bistahelLocal;
+function hav(a,b){var R=6371,r=Math.PI/180,dLa=(b.lat-a.lat)*r,dLo=(b.lng-a.lng)*r,x=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin(dLo/2)*Math.sin(dLo/2);return 2*R*Math.asin(Math.sqrt(x));}
+var hasLoc=function(p){return typeof p.lat==='number'&&typeof p.lng==='number';};
+function distKm(p){return (S.pos&&hasLoc(p))?hav(S.pos,p):null;}
+function distTxt(p){var d=distKm(p);if(d==null)return '';return d<1?(Math.max(10,Math.round(d*100)*10))+' م':(d<10?d.toFixed(1):Math.round(d))+' كم';}
 var isSaved=function(type,id){return S.saves.some(function(s){return s.type===type&&s.id===id;});};
 
 /* ---------- عناصر مشتركة ---------- */
@@ -150,8 +158,8 @@ function topbar(title,right){return '<div class="row" style="justify-content:spa
 function empty(icon,title,sub,btn){return '<div class="empty"><div class="circle">'+ic(icon,40,'currentColor',1.8)+'</div><b>'+E(title)+'</b><p>'+E(sub)+'</p>'+(btn||'')+'</div>';}
 function nav(active){var items=[['home','home'],['search','search'],['fab','plus'],['me-saved','bookmark'],['me','user']];
  return '<nav class="nav" aria-label="التنقل">'+items.map(function(it){if(it[0]==='fab')return '<button class="fab" data-act="fab" aria-label="إضافة">'+ic('plus',26,'#fff',2.6)+'</button>';var on=(active===it[0]);return '<button class="'+(on?'on':'')+'" data-go="'+it[0]+'" aria-label="'+it[0]+'"'+(on?' aria-current="page"':'')+'>'+ic(it[1],24)+'</button>';}).join('')+'</nav>';}
-function placeCard(p){var st=placeStats(p.id),c=catOf(p.cat);return '<button class="pc" data-go="place-'+E(p.id)+'"><div class="img">'+(p.photo?'<img src="'+E(p.photo)+'" alt="" loading="lazy">':ic(c.i,40,'currentColor',1.5))+'</div><div class="b"><span class="nm">'+E(p.name)+'</span><span class="small muted">'+E(c.n)+'</span>'+ratingLine(st.score,st.n,12)+'</div></button>';}
-function placeRow(p){var st=placeStats(p.id),c=catOf(p.cat);return '<button class="hc" data-go="place-'+E(p.id)+'"><div class="img">'+(p.photo?'<img src="'+E(p.photo)+'" alt="" loading="lazy">':ic(c.i,34,'currentColor',1.5))+'</div><div class="b"><div><div class="nm">'+E(p.name)+'</div><div class="small muted">'+E(c.n)+(p.address?' · '+E(p.address):'')+'</div></div>'+ratingLine(st.score,st.n,13)+'</div></button>';}
+function placeCard(p){var st=placeStats(p.id),c=catOf(p.cat);return '<button class="pc" data-go="place-'+E(p.id)+'"><div class="img">'+(p.photo?'<img src="'+E(p.photo)+'" alt="" loading="lazy">':ic(c.i,40,'currentColor',1.5))+'</div><div class="b"><span class="nm">'+E(p.name)+'</span><span class="small muted">'+E(c.n)+(distTxt(p)?' · '+distTxt(p):'')+'</span>'+ratingLine(st.score,st.n,12)+'</div></button>';}
+function placeRow(p){var st=placeStats(p.id),c=catOf(p.cat);return '<button class="hc" data-go="place-'+E(p.id)+'"><div class="img">'+(p.photo?'<img src="'+E(p.photo)+'" alt="" loading="lazy">':ic(c.i,34,'currentColor',1.5))+'</div><div class="b"><div><div class="nm">'+E(p.name)+'</div><div class="small muted">'+E(c.n)+(distTxt(p)?' · '+distTxt(p):'')+(p.address?' · '+E(p.address):'')+'</div></div>'+ratingLine(st.score,st.n,13)+'</div></button>';}
 function dishCard(d){var st=dishStats(d.id);return '<button class="card" data-go="dish-'+E(d.id)+'" style="border:0;padding:8px;text-align:right;display:block"><div style="height:92px;border-radius:10px;background:#EFE3CE;display:flex;align-items:center;justify-content:center;color:var(--gold-strong);overflow:hidden">'+(d.photo?'<img src="'+E(d.photo)+'" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover">':ic('utensils',32,'currentColor',1.5))+'</div><div class="col" style="gap:6px;padding:10px 2px 4px"><span class="nm">'+E(d.name)+'</span>'+ratingLine(st.score,st.n,12)+'</div></button>';}
 function reviewCard(r,opts){opts=opts||{};var pl=placeById(r.placeId),dsh=r.dishId?dishById(r.dishId):null;
  var sc=r.kind==='dish'?avg([r.s.taste,r.s.price]):avg([r.s.service,r.s.clean]);
@@ -173,7 +181,7 @@ function vOnb(){var i=S.onb||0,o=ONB[i];return '<div class="screen"><div class="
 function unreadCount(){var seen=LS.get('seen_notif',0);return notifs().filter(function(n){return n.ts>seen;}).length;}
 function notifs(){var mine={};S.places.forEach(function(p){if(p.by===S.uid)mine[p.id]=1;});return S.reviews.filter(function(r){return mine[r.placeId]&&r.by!==S.uid;}).sort(function(a,b){return b.ts-a.ts;});}
 function vHome(){
- var ps=S.places;var head='<div class="row" style="justify-content:space-between;padding:16px 16px 4px"><div class="row" style="gap:10px"><img src="logo-mark.png" alt="" width="40" height="40"><span style="font-size:18px;font-weight:700">بيستاهل</span></div><button class="ib" data-go="notif" aria-label="الإشعارات" style="position:relative">'+ic('bell',20)+(unreadCount()?'<i style="position:absolute;top:8px;left:10px;width:9px;height:9px;border-radius:50%;background:var(--orange);border:2px solid #fff"></i>':'')+'</button></div>';
+ var ps=S.places;var head='<div class="row" style="justify-content:space-between;padding:16px 16px 4px"><div class="row" style="gap:10px"><img src="logo-mark.png" alt="" width="40" height="40"><span style="font-size:18px;font-weight:700">بيستاهل</span></div><div class="row" style="gap:8px">'+(PAGES?'<button class="ib" data-go="map" aria-label="الخريطة">'+ic('map',20)+'</button>':'')+'<button class="ib" data-go="notif" aria-label="الإشعارات" style="position:relative">'+ic('bell',20)+(unreadCount()?'<i style="position:absolute;top:8px;left:10px;width:9px;height:9px;border-radius:50%;background:var(--orange);border:2px solid #fff"></i>':'')+'</button></div></div>';
  var sb='<div style="padding:12px 16px 10px"><button class="row" data-go="search" style="width:100%;height:46px;border-radius:999px;background:#fff;border:0;box-shadow:0 2px 8px rgba(57,39,25,.08);padding:0 16px;gap:10px;color:var(--muted)">'+ic('search',18)+'<span style="flex:1;text-align:right">ابحث عن مكان أو طبق</span>'+ic('filter',18)+'</button></div>';
  var cats='<div class="hscroll" style="gap:14px;padding:8px 16px 4px">'+CATS.map(function(c){return '<button data-act="cat" data-id="'+c.id+'" class="col" style="align-items:center;gap:8px;flex:none;background:none;border:0;width:64px"><span style="width:56px;height:56px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(57,39,25,.08);display:flex;align-items:center;justify-content:center;color:var(--orange-strong)">'+ic(c.i,26)+'</span><span style="font-size:12px;font-weight:600">'+c.n+'</span></button>';}).join('')+'</div>';
  var body='';
@@ -181,8 +189,11 @@ function vHome(){
  else{var top=ps.filter(function(p){return placeStats(p.id).n>0;}).sort(function(a,b){return placeStats(b.id).score-placeStats(a.id).score;}).slice(0,10);
   var pop=ps.slice().sort(function(a,b){return placeStats(b.id).n-placeStats(a.id).n;}).filter(function(p){return placeStats(p.id).n>0;}).slice(0,10);
   var fresh=ps.slice().sort(function(a,b){return b.ts-a.ts;}).slice(0,10);
+  var near='';
+  if(PAGES){if(S.pos){var nl=ps.filter(hasLoc).sort(function(a,b){return distKm(a)-distKm(b);}).slice(0,10);if(nl.length)near='<div class="col" style="gap:10px;margin-top:18px"><div class="row" style="justify-content:space-between;padding:0 16px"><span class="h2">قريب منك</span><button class="link" data-go="map">الخريطة '+ic('chevL',14)+'</button></div><div class="hscroll">'+nl.map(placeCard).join('')+'</div></div>';}
+   else if(navigator.geolocation)near='<div class="card row" style="margin:16px 16px 0;padding:14px;gap:12px"><span class="ico">'+ic('pin',20)+'</span><div class="col grow" style="gap:2px"><b>الأماكن القريبة منك</b><span class="small muted">اسمح بتحديد موقعك لعرضها</span></div><button class="btn" style="width:auto;height:40px;padding:0 18px;font-size:13px" data-act="locate">تفعيل</button></div>';}
   var sec=function(t,list,sort){return list.length?'<div class="col" style="gap:10px;margin-top:18px"><div class="row" style="justify-content:space-between;padding:0 16px"><span class="h2">'+t+'</span><button class="link" data-act="seeall" data-sort="'+sort+'">عرض الكل '+ic('chevL',14)+'</button></div><div class="hscroll">'+list.map(placeCard).join('')+'</div></div>':'';};
-  body=sec('الأعلى تقييماً',top,'rating')+sec('الأكثر تقييماً',pop,'count')+sec('أُضيفت حديثاً',fresh,'new');}
+  body=near+sec('الأعلى تقييماً',top,'rating')+sec('الأكثر تقييماً',pop,'count')+sec('أُضيفت حديثاً',fresh,'new');}
  return '<div class="screen">'+head+sb+cats+body+'<div style="height:24px"></div>'+nav('home')+'</div>';}
 
 function filtered(){var q=S.q.trim().toLowerCase(),F=S.F;var list=S.places.filter(function(p){
@@ -190,7 +201,7 @@ function filtered(){var q=S.q.trim().toLowerCase(),F=S.F;var list=S.places.filte
   if(F.min&&placeStats(p.id).score<F.min)return false;
   if(q){var hit=(p.name||'').toLowerCase().indexOf(q)>-1||(p.address||'').toLowerCase().indexOf(q)>-1||catOf(p.cat).n.indexOf(q)>-1||S.dishes.some(function(d){return d.placeId===p.id&&(d.name||'').toLowerCase().indexOf(q)>-1;});if(!hit)return false;}
   return true;});
- list.sort(function(a,b){if(F.sort==='count')return placeStats(b.id).n-placeStats(a.id).n;if(F.sort==='new')return b.ts-a.ts;return placeStats(b.id).score-placeStats(a.id).score||placeStats(b.id).n-placeStats(a.id).n;});return list;}
+ list.sort(function(a,b){if(F.sort==='near'){var da=distKm(a),db2=distKm(b);return (da==null?1e9:da)-(db2==null?1e9:db2);}if(F.sort==='count')return placeStats(b.id).n-placeStats(a.id).n;if(F.sort==='new')return b.ts-a.ts;return placeStats(b.id).score-placeStats(a.id).score||placeStats(b.id).n-placeStats(a.id).n;});return list;}
 function resultsHtml(){var q=S.q.trim(),F=S.F;
  if(!q&&!F.cat&&!F.min&&!S.showAll){var rec=LS.get('recent',[]);
   return '<div class="col" style="padding:8px 16px 0;gap:4px">'+(rec.length?'<div class="row" style="justify-content:space-between;padding:8px 0"><span class="h2">عمليات البحث الأخيرة</span><button class="link" data-act="clearrecent">مسح الكل</button></div>'+rec.map(function(t){return '<button class="row" data-act="recent" data-q="'+E(t)+'" style="gap:12px;height:48px;border:0;border-bottom:1px solid #F0E4D2;background:none;text-align:right;width:100%"><span class="muted">'+ic('clock',18)+'</span><span style="flex:1">'+E(t)+'</span></button>';}).join(''):'')+'</div><div class="col" style="padding:20px 0 0;gap:10px"><span class="h2" style="padding:0 16px">التصنيفات</span><div class="chips">'+CATS.map(function(c){return '<button class="chip" data-act="cat" data-id="'+c.id+'">'+ic(c.i,16)+c.n+'</button>';}).join('')+'</div></div>';}
@@ -201,7 +212,7 @@ function vSearch(){var F=S.F;var on=F.cat||F.min||F.sort!=='rating';
  var bar='<div class="row" style="gap:10px;padding:16px 16px 10px">'+backBtn()+'<div class="row" style="flex:1;height:46px;background:#fff;border-radius:999px;padding:0 14px;gap:8px;box-shadow:0 2px 8px rgba(57,39,25,.08)"><span class="muted">'+ic('search',17)+'</span><input id="q" type="search" enterkeyhint="search" placeholder="ابحث عن مكان أو طبق" value="'+E(S.q)+'" style="flex:1;border:0;outline:0;background:none;min-width:0"><button data-act="sheetfilter" aria-label="تصفية" style="border:0;background:none;color:'+(on?'var(--orange-strong)':'var(--muted)')+'">'+ic('filter',18)+'</button></div></div>';
  var chips='<div class="chips"><button class="chip '+(!F.cat?'on':'')+'" data-act="cat" data-id="">الكل</button>'+CATS.map(function(c){return '<button class="chip '+(F.cat===c.id?'on':'')+'" data-act="cat" data-id="'+c.id+'">'+c.n+'</button>';}).join('')+'</div>';
  return '<div class="screen">'+bar+chips+'<div id="res">'+resultsHtml()+'</div><div class="grow"></div>'+nav('search')+'</div>';}
-function filterSheet(){var F=S.F,T={rating:'الأعلى تقييماً',count:'الأكثر تقييماً',new:'الأحدث'};
+function filterSheet(){var F=S.F,T={rating:'الأعلى تقييماً',count:'الأكثر تقييماً',new:'الأحدث'};if(S.pos)T.near='الأقرب إليّ';
  return '<div class="ov" data-act="closesheet"><div class="sheet" data-stop="1" role="dialog" aria-label="تصفية النتائج"><div class="handle"></div><div class="row" style="justify-content:space-between;padding:0 16px"><b style="font-size:18px">تصفية النتائج</b><button class="ib" data-act="closesheet" aria-label="إغلاق" style="width:36px;height:36px">'+ic('x',18)+'</button></div>'+
  '<div class="col" style="gap:10px"><span class="h2" style="padding:0 16px">التصنيف</span><div class="chips"><button class="chip '+(!F.cat?'on':'')+'" data-act="fcat" data-id="">الكل</button>'+CATS.map(function(c){return '<button class="chip '+(F.cat===c.id?'on':'')+'" data-act="fcat" data-id="'+c.id+'">'+c.n+'</button>';}).join('')+'</div></div>'+
  '<div class="col" style="gap:10px"><span class="h2" style="padding:0 16px">الترتيب</span><div class="chips">'+Object.keys(T).map(function(k){return '<button class="chip '+(F.sort===k?'on':'')+'" data-act="fsort" data-id="'+k+'">'+T[k]+'</button>';}).join('')+'</div></div>'+
@@ -211,7 +222,7 @@ function filterSheet(){var F=S.F,T={rating:'الأعلى تقييماً',count:'
 function vPlace(id,tab){var p=placeById(id);if(!p)return '<div class="screen">'+topbar('المكان')+empty('pin','المكان غير موجود','ربما حُذف أو لم يُحمّل بعد','<button class="btn out" style="width:auto;padding:0 28px" data-go="home">الرئيسية</button>')+'</div>';
  var st=placeStats(id),c=catOf(p.cat);tab=tab||'ratings';
  var hero='<div class="hero'+(p.photo?' has':'')+'">'+(p.photo?'<img src="'+E(p.photo)+'" alt="">':ic(c.i,72,'currentColor',1.2))+'<div class="t">'+backBtn()+'<div class="row" style="gap:8px">'+ibtn('share','share','data-act="share"')+ibtn('save','bookmark','data-type="place" data-id="'+E(id)+'"',null,isSaved('place',id)?'#F4770B':null)+'</div></div></div>';
- var info='<div class="card info"><div class="row" style="justify-content:space-between;align-items:flex-start;gap:10px"><div class="col" style="gap:8px;min-width:0"><span style="font-size:20px;font-weight:700;overflow-wrap:anywhere">'+E(p.name)+'</span><span class="pill" style="align-self:flex-start">'+E(c.n)+'</span></div>'+(st.n?'<div class="col" style="align-items:center;gap:4px"><span style="font-size:28px;font-weight:700;line-height:1">'+fmt(st.score)+'</span>'+starsRow(st.score,13)+'<span class="small muted">'+st.n+' تقييم</span></div>':'<span class="small muted">لا تقييمات بعد</span>')+'</div>'+((p.address||p.hours)?'<div style="height:1px;background:#F3E9D8"></div><div class="col" style="gap:10px">'+(p.address?'<div class="row" style="gap:10px;color:var(--orange-strong)">'+ic('pin',18)+'<span style="color:var(--ink)">'+E(p.address)+'</span></div>':'')+(p.hours?'<div class="row" style="gap:10px;color:var(--orange-strong)">'+ic('clock',18)+'<span style="color:var(--ink)">'+E(p.hours)+'</span></div>':'')+'</div>':'')+'</div>';
+ var info='<div class="card info"><div class="row" style="justify-content:space-between;align-items:flex-start;gap:10px"><div class="col" style="gap:8px;min-width:0"><span style="font-size:20px;font-weight:700;overflow-wrap:anywhere">'+E(p.name)+'</span><span class="pill" style="align-self:flex-start">'+E(c.n)+'</span></div>'+(st.n?'<div class="col" style="align-items:center;gap:4px"><span style="font-size:28px;font-weight:700;line-height:1">'+fmt(st.score)+'</span>'+starsRow(st.score,13)+'<span class="small muted">'+st.n+' تقييم</span></div>':'<span class="small muted">لا تقييمات بعد</span>')+'</div>'+((p.address||p.hours)?'<div style="height:1px;background:#F3E9D8"></div><div class="col" style="gap:10px">'+(p.address?'<div class="row" style="gap:10px;color:var(--orange-strong)">'+ic('pin',18)+'<span style="color:var(--ink)">'+E(p.address)+'</span></div>':'')+(p.hours?'<div class="row" style="gap:10px;color:var(--orange-strong)">'+ic('clock',18)+'<span style="color:var(--ink)">'+E(p.hours)+'</span></div>':'')+'</div>':'')+(hasLoc(p)?'<div class="col" style="gap:10px">'+(PAGES&&window.L?'<div id="minimap" data-id="'+E(p.id)+'" style="height:140px;border-radius:12px;overflow:hidden;direction:ltr;isolation:isolate"></div>':'')+'<a class="btn out" href="https://www.google.com/maps/dir/?api=1&destination='+p.lat+','+p.lng+'" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none">'+ic('pin',16)+' الاتجاهات'+(distTxt(p)?' · '+distTxt(p):'')+'</a></div>':'')+'</div>';
  var tabs='<div class="tabs" style="margin-top:14px">'+[['ratings','التقييمات'],['dishes','الأطباق'],['reviews','الآراء']].map(function(t){return '<button class="tab '+(tab===t[0]?'on':'')+'" data-go="place-'+E(id)+'-'+t[0]+'">'+t[1]+'</button>';}).join('')+'</div>';
  var body='';
  if(tab==='ratings'){var row=function(l,v){return '<div class="row" style="gap:14px"><span style="font-size:14px;font-weight:600;width:56px">'+l+'</span><div class="bar"><i style="width:'+(v/5*100)+'%"></i></div><span class="sc" style="width:28px;text-align:left">'+(v?fmt(v):'–')+'</span></div>';};
@@ -249,9 +260,15 @@ function vAdd(pid,did){var D=S.draft;if(!D||D.init!==pid+'|'+did){S.draft=D={ini
  var f2='<div class="card col" style="margin:0 16px;padding:16px;gap:14px"><span class="h2">'+(isDish?'تقييم الطبق':'تقييم المكان')+'</span>'+(isDish?srow('الطعم','taste',D.s.taste)+srow('السعر','price',D.s.price):srow('الخدمة','service',D.s.service)+srow('النظافة','clean',D.s.clean))+'</div>';
  var f3='<div class="card col" style="margin:0 16px;padding:16px;gap:10px"><span class="h2">صورة (اختياري)</span>'+photoField(D.photo,'review')+'<label class="h2" for="txt" style="margin-top:6px">تجربتك (اختياري)</label><textarea id="txt" class="inp" data-in="text" maxlength="600">'+E(D.text)+'</textarea></div>';
  return '<div class="screen">'+topbar('إضافة تقييم')+writeBanner()+'<div class="col" style="gap:14px;padding-bottom:20px">'+f1+(D.placeId?f2+f3:'')+'</div><div class="bbar"><button class="btn" data-act="publish"'+(valid&&S.canWrite!==false?'':' disabled')+'>نشر التقييم</button></div></div>';}
+function locField(P){var has=hasLoc(P),bs='flex:1;height:44px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px';return '<div class="field"><span class="lbl">الموقع على الخريطة (اختياري)</span>'+(has?'<div class="row" style="gap:8px;color:var(--orange-text);font-weight:600">'+ic('pin',18)+'<span>تم تحديد الموقع</span><button class="link" data-act="rmloc" style="margin-right:auto;color:var(--err)">إزالة</button></div>':'')+'<div class="row" style="gap:10px"><button class="btn out" style="'+bs+'" data-act="gpsloc">'+ic('target',16)+' موقعي الحالي</button><button class="btn out" style="'+bs+'" data-go="pickloc">'+ic('map',16)+' من الخريطة</button></div></div>';}
+function vMap(){var pls=S.places.filter(hasLoc),sel=S.selPlace&&placeById(S.selPlace),body;
+ if(!PAGES||!window.L)body=empty('map','الخريطة غير متاحة هنا','افتح التطبيق من الرابط الرئيسي لعرض الخريطة');
+ else body='<div style="position:relative;flex:1;min-height:420px;direction:ltr;isolation:isolate"><div id="bigmap" style="position:absolute;inset:0"></div><button class="ib" data-act="locate" aria-label="موقعي" style="position:absolute;bottom:16px;left:16px;z-index:500;width:48px;height:48px;color:var(--orange-strong)">'+ic('target',22)+'</button></div>'+(sel?'<div style="padding:12px 16px 0">'+placeRow(sel)+'</div>':'')+(pls.length<S.places.length?'<div class="small muted" style="padding:8px 16px 0;text-align:center">'+(S.places.length-pls.length)+' مكان بدون موقع محدد</div>':'');
+ return '<div class="screen">'+topbar('الخريطة')+body+'<div style="height:10px"></div>'+nav('')+'</div>';}
+function vPickLoc(){var ok=PAGES&&window.L;return '<div class="screen">'+topbar('تحديد الموقع')+(ok?'<div style="position:relative;flex:1;min-height:420px;direction:ltr;isolation:isolate"><div id="pickmap" style="position:absolute;inset:0"></div><button class="ib" data-act="locate" aria-label="موقعي" style="position:absolute;bottom:16px;left:16px;z-index:500;width:48px;height:48px;color:var(--orange-strong)">'+ic('target',22)+'</button></div><div class="small muted" style="text-align:center;padding:10px 16px 0">اضغط على الخريطة لتحديد مكان المطعم</div><div class="bbar"><button class="btn" id="pickok" data-act="pickok" disabled>تأكيد الموقع</button></div>':empty('map','الخريطة غير متاحة هنا','افتح التطبيق من الرابط الرئيسي'))+'</div>';}
 function vAddPlace(){var P=S.pdraft;if(!P)S.pdraft=P={name:'',cat:'rest',address:'',hours:'',photo:''};
  var ok=P.name.trim().length>1;
- return '<div class="screen">'+topbar('إضافة مكان')+writeBanner()+'<div class="card col" style="margin:0 16px;padding:16px;gap:14px"><div class="field"><span class="lbl">صورة المكان (اختياري)</span>'+photoField(P.photo,'place')+'</div><div class="field"><label class="lbl" for="pn">اسم المكان</label><input id="pn" class="inp" data-pin="name" maxlength="60" value="'+E(P.name)+'"></div><div class="field"><span class="lbl">التصنيف</span><div class="row" style="flex-wrap:wrap;gap:8px">'+CATS.map(function(c){return '<button class="chip '+(P.cat===c.id?'on':'')+'" data-act="pcat" data-id="'+c.id+'">'+ic(c.i,16)+c.n+'</button>';}).join('')+'</div></div><div class="field"><label class="lbl" for="pa">العنوان (اختياري)</label><input id="pa" class="inp" data-pin="address" maxlength="100" value="'+E(P.address)+'"></div><div class="field"><label class="lbl" for="ph">ساعات العمل (اختياري)</label><input id="ph" class="inp" data-pin="hours" maxlength="60" value="'+E(P.hours)+'"></div></div><div class="grow"></div><div class="bbar"><button class="btn" data-act="saveplace"'+(ok&&S.canWrite!==false?'':' disabled')+'>إضافة المكان</button></div></div>';}
+ return '<div class="screen">'+topbar('إضافة مكان')+writeBanner()+'<div class="card col" style="margin:0 16px;padding:16px;gap:14px"><div class="field"><span class="lbl">صورة المكان (اختياري)</span>'+photoField(P.photo,'place')+'</div><div class="field"><label class="lbl" for="pn">اسم المكان</label><input id="pn" class="inp" data-pin="name" maxlength="60" value="'+E(P.name)+'"></div><div class="field"><span class="lbl">التصنيف</span><div class="row" style="flex-wrap:wrap;gap:8px">'+CATS.map(function(c){return '<button class="chip '+(P.cat===c.id?'on':'')+'" data-act="pcat" data-id="'+c.id+'">'+ic(c.i,16)+c.n+'</button>';}).join('')+'</div></div><div class="field"><label class="lbl" for="pa">العنوان (اختياري)</label><input id="pa" class="inp" data-pin="address" maxlength="100" value="'+E(P.address)+'"></div>'+(PAGES?locField(P):'')+'<div class="field"><label class="lbl" for="ph">ساعات العمل (اختياري)</label><input id="ph" class="inp" data-pin="hours" maxlength="60" value="'+E(P.hours)+'"></div></div><div class="grow"></div><div class="bbar"><button class="btn" data-act="saveplace"'+(ok&&S.canWrite!==false?'':' disabled')+'>إضافة المكان</button></div></div>';}
 function vDone(){return '<div class="screen"><div class="deco1"></div><div class="deco2"></div><div class="row" style="padding:16px"><button class="ib" data-go="home" aria-label="إغلاق">'+ic('x',20)+'</button></div><div class="grow"></div><div class="col" style="align-items:center;text-align:center;gap:14px;padding:0 32px"><div style="width:112px;height:112px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 10px 28px rgba(244,119,11,.35);border:6px solid #FDEBD9">'+ic('check',52,'#fff',2.6)+'</div><span style="font-size:22px;font-weight:700;margin-top:10px">تم نشر تقييمك</span><span class="muted" style="line-height:22px">شكراً لمساهمتك في مجتمع بيستاهل</span></div><div class="grow"></div><div class="grow"></div><div class="col" style="gap:12px;padding:0 16px 28px"><button class="btn" data-go="me">عرض تقييمي</button><button class="btn out" data-go="home">العودة للرئيسية</button></div></div>';}
 
 function vMe(tab){tab=tab||'reviews';var myR=S.reviews.filter(function(r){return r.by===S.uid;}).sort(function(a,b){return b.ts-a.ts;}),myP=S.places.filter(function(p){return p.by===S.uid;});
@@ -286,7 +303,7 @@ function view(){var r=route();
  var ready=S.loaded.p&&S.loaded.d&&S.loaded.r;
  if(!ready&&!S.err){return S.slow?offlineView('تأخر الاتصال بالبيانات. ننتظر الاستجابة...'):loadingView();}
  if(S.err&&!ready)return offlineView('حدث خطأ أثناء تحميل البيانات');
- switch(r.name){case 'search':return vSearch();case 'place':return vPlace(r.a,r.b);case 'dish':return vDish(r.a);case 'add':return vAdd(r.a,r.b);case 'addplace':return vAddPlace();case 'done':return vDone();case 'me':return vMe(r.a==='saved'?'saved':r.a==='activity'?'activity':'reviews');case 'notif':return vNotif();case 'editprofile':return vEdit();case 'settings':return vSettings();default:return vHome();}}
+ switch(r.name){case 'search':return vSearch();case 'place':return vPlace(r.a,r.b);case 'dish':return vDish(r.a);case 'add':return vAdd(r.a,r.b);case 'addplace':return vAddPlace();case 'done':return vDone();case 'map':return vMap();case 'pickloc':return vPickLoc();case 'me':return vMe(r.a==='saved'?'saved':r.a==='activity'?'activity':'reviews');case 'notif':return vNotif();case 'editprofile':return vEdit();case 'settings':return vSettings();default:return vHome();}}
 var raf=0;
 function render(force){if(raf&&!force)return;raf=requestAnimationFrame(function(){raf=0;doRender();});}
 function doRender(){var r=route(),a=document.activeElement;
@@ -295,13 +312,35 @@ function doRender(){var r=route(),a=document.activeElement;
  app.innerHTML=view()+(S.sheet==='fab'?fabSheet():'')+(S.sheet==='filter'?filterSheet():'')+(S.dlg?dialogDel():'')+(S.sheet==='photo'?photoSheet():'')+(S.zoom?'<div class="lb" data-act="unzoom"><img src="'+E(S.zoom)+'" alt=""></div>':'')+(S.toast?'<div class="toast" role="status">'+E(S.toast)+'</div>':'');
  if(S.keep){window.scrollTo(0,y);S.keep=false;}
  if(r.name==='notif'&&S.loaded.r)LS.set('seen_notif',Date.now()-1);
- resolveNames();}
+ initMaps();resolveNames();}
 var nameBusy=false;
 function resolveNames(){if(!S.user||nameBusy)return;var ids={};S.reviews.forEach(function(x){if(!S.names[x.by])ids[x.by]=1;});var arr=Object.keys(ids).slice(0,32);if(!arr.length)return;nameBusy=true;
  S.user.profiles(arr).then(function(ps){var ch=false;arr.forEach(function(k){var n=ps&&ps[k]&&ps[k].name;if(n){S.names[k]=n;ch=true;}else{S.names[k]=S.names[k]||'';}});nameBusy=false;if(ch)render();}).catch(function(){nameBusy=false;});}
 function toast(t){S.toast=t;render(true);setTimeout(function(){S.toast='';render(true);},2600);}
+function locate(quiet){if(!navigator.geolocation){if(!quiet)toast('جهازك لا يدعم تحديد الموقع');return;}
+ navigator.geolocation.getCurrentPosition(function(g){S.pos={lat:g.coords.latitude,lng:g.coords.longitude};LS.set('geo_ok',1);render(true);if(S.afterLoc){var f=S.afterLoc;S.afterLoc=null;f();}},function(){S.afterLoc=null;if(!quiet)toast('تعذّر تحديد موقعك. فعّل الموقع واسمح للمتصفح باستخدامه');},{enableHighAccuracy:true,timeout:12000,maximumAge:60000});}
+function pinIcon(on){return L.divIcon({className:'',html:'<svg width="34" height="42" viewBox="0 0 34 42"><path d="M17 41C17 41 31 27 31 16A14 14 0 0 0 3 16C3 27 17 41 17 41Z" fill="'+(on?'#BF5500':'#F4770B')+'" stroke="#fff" stroke-width="2.5"/><circle cx="17" cy="16" r="5.5" fill="#fff"/></svg>',iconSize:[34,42],iconAnchor:[17,41]});}
+function meIcon(){return L.divIcon({className:'',html:'<span style="display:block;width:16px;height:16px;border-radius:50%;background:#392719;border:3px solid #fff;box-shadow:0 0 0 5px rgba(57,39,25,.22)"></span>',iconSize:[16,16],iconAnchor:[8,8]});}
+function killMaps(){(S.maps||[]).forEach(function(m){try{m.remove();}catch(e){}});S.maps=[];}
+function tiles(m){L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(m);}
+function initMaps(){killMaps();if(!window.L)return;
+ var big=document.getElementById('bigmap');
+ if(big){var pls=S.places.filter(hasLoc),m=L.map(big,{zoomControl:false});S.maps.push(m);tiles(m);var pts=[];
+  pls.forEach(function(p){L.marker([p.lat,p.lng],{icon:pinIcon(S.selPlace===p.id)}).addTo(m).on('click',function(){S.selPlace=p.id;render(true);});pts.push([p.lat,p.lng]);});
+  if(S.pos)L.marker([S.pos.lat,S.pos.lng],{icon:meIcon(),interactive:false}).addTo(m);
+  if(S.mapView)m.setView(S.mapView.c,S.mapView.z);else if(pts.length)m.fitBounds(pts,{padding:[50,50],maxZoom:16});else if(S.pos)m.setView([S.pos.lat,S.pos.lng],14);else m.setView([33.51,36.29],6);
+  m.on('moveend',function(){var c=m.getCenter();S.mapView={c:[c.lat,c.lng],z:m.getZoom()};});}
+ var mini=document.getElementById('minimap');
+ if(mini){var q=placeById(mini.dataset.id);if(q&&hasLoc(q)){var m2=L.map(mini,{zoomControl:false,dragging:false,scrollWheelZoom:false,touchZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,attributionControl:false}).setView([q.lat,q.lng],15);S.maps.push(m2);tiles(m2);L.marker([q.lat,q.lng],{icon:pinIcon(true),interactive:false}).addTo(m2);}}
+ var pick=document.getElementById('pickmap');
+ if(pick){var P=S.pdraft||{},m3=L.map(pick,{zoomControl:false}),mk=null;S.maps.push(m3);tiles(m3);
+  var put=function(la,ln){if(mk)mk.setLatLng([la,ln]);else mk=L.marker([la,ln],{icon:pinIcon(true)}).addTo(m3);S.pick={lat:la,lng:ln};var b=document.getElementById('pickok');if(b)b.disabled=false;};
+  var pk=S.pick||(hasLoc(P)?P:null);
+  if(pk){m3.setView([pk.lat,pk.lng],16);put(pk.lat,pk.lng);}else if(S.pos)m3.setView([S.pos.lat,S.pos.lng],16);else m3.setView([33.51,36.29],6);
+  if(S.pos)L.marker([S.pos.lat,S.pos.lng],{icon:meIcon(),interactive:false}).addTo(m3);
+  m3.on('click',function(e){put(e.latlng.lat,e.latlng.lng);});}}
 function go(h){if(location.hash==='#'+h){render(true);return;}location.hash=h;}
-window.addEventListener('hashchange',function(){S.navCount++;S.sheet=null;S.dlg=null;if(route().name!=='add')S.draft=null;if(route().name!=='addplace')S.pdraft=null;if(route().name!=='editprofile')S.edraft=null;S._force=true;window.scrollTo(0,0);render(true);});
+window.addEventListener('hashchange',function(){S.navCount++;S.sheet=null;S.dlg=null;if(route().name!=='add')S.draft=null;if(route().name!=='addplace'&&route().name!=='pickloc')S.pdraft=null;if(route().name!=='pickloc')S.pick=null;if(route().name!=='editprofile')S.edraft=null;S._force=true;window.scrollTo(0,0);render(true);});
 
 /* ---------- الأفعال ---------- */
 var ACT={
@@ -330,8 +369,12 @@ var ACT={
   if(isDish&&dishId==='__new'){dishId='d'+uid();var nd={placeId:D.placeId,name:D.newDish.trim(),photo:D.photo||'',by:S.uid,ts:now};chain=S.db.collection('dishes').doc(dishId).set(nd);}
   chain.then(function(){var target=isDish?dishId:D.placeId;var rev={photo:D.photo||'',kind:isDish?'dish':'place',placeId:D.placeId,dishId:isDish?dishId:'',by:S.uid,s:isDish?{taste:D.s.taste,price:D.s.price}:{service:D.s.service,clean:D.s.clean},text:D.text.trim(),ts:now};
    return S.db.collection('reviews').doc(S.uid+'_'+target).set(rev);}).then(function(){S.draft=null;go('done');}).catch(function(){el.disabled=false;toast('تعذّر نشر التقييم. تحقق من صلاحياتك');});},
- saveplace:function(el){var P=S.pdraft;if(!P||!S.db||!S.uid)return;el.disabled=true;var id='p'+uid();S.db.collection('places').doc(id).set({photo:P.photo||'',name:P.name.trim(),cat:P.cat,address:P.address.trim(),hours:P.hours.trim(),by:S.uid,ts:Date.now()}).then(function(){S.pdraft=null;go('place-'+id);}).catch(function(){el.disabled=false;toast('تعذّرت إضافة المكان. تحقق من صلاحياتك');});},
+ saveplace:function(el){var P=S.pdraft;if(!P||!S.db||!S.uid)return;el.disabled=true;var id='p'+uid();S.db.collection('places').doc(id).set({photo:P.photo||'',lat:typeof P.lat==='number'?P.lat:null,lng:typeof P.lng==='number'?P.lng:null,name:P.name.trim(),cat:P.cat,address:P.address.trim(),hours:P.hours.trim(),by:S.uid,ts:Date.now()}).then(function(){S.pdraft=null;go('place-'+id);}).catch(function(){el.disabled=false;toast('تعذّرت إضافة المكان. تحقق من صلاحياتك');});},
  savebio:function(el){if(!S.db||!S.uid)return;el.disabled=true;S.db.collection('profiles').doc(S.uid).set({bio:(S.edraft?S.edraft.bio:'').trim()}).then(function(){S.edraft=null;toast('تم حفظ الملف');go('me');}).catch(function(){el.disabled=false;toast('تعذّر الحفظ');});},
+ locate:function(){var rn=route().name;S.afterLoc=function(){if(rn==='pickloc'){S.pick={lat:S.pos.lat,lng:S.pos.lng};}else S.mapView={c:[S.pos.lat,S.pos.lng],z:15};render(true);};locate(false);},
+ gpsloc:function(){S.afterLoc=function(){if(S.pdraft){S.pdraft.lat=S.pos.lat;S.pdraft.lng=S.pos.lng;}S._force=true;render(true);toast('تم تحديد موقعك الحالي');};locate(false);},
+ rmloc:function(){if(S.pdraft){delete S.pdraft.lat;delete S.pdraft.lng;}S._force=true;render(true);},
+ pickok:function(){if(S.pick&&S.pdraft){S.pdraft.lat=S.pick.lat;S.pdraft.lng=S.pick.lng;}S.pick=null;if(S.navCount>0)history.back();else go('addplace');},
  pickphoto:function(el){S.photoT=el.dataset.t;S.sheet='photo';render(true);},
  rmphoto:function(el){var o=el.dataset.t==='place'?S.pdraft:S.draft;if(o)o.photo='';S._force=true;render(true);},
  zoom:function(el){var r=S.reviews.find(function(x){return x.id===el.dataset.id;});if(r&&r.photo){S.zoom=r.photo;render(true);}},
@@ -381,6 +424,7 @@ function boot(){
   return Promise.all([S.user.id(),S.user.me(),S.user.can?S.user.can('data.write'):null]).then(function(v){S.uid=v[0];S.myName=(v[1]&&v[1].name)||'';S.canWrite=v[2];});
  }).catch(function(){}).then(function(){
   if(S.db)startData();
+  if(PAGES&&LS.get('geo_ok',0))locate(true);
   setTimeout(function(){after();},route().raw?0:1400);
   if(!S.db)setTimeout(function(){S.booted=true;render(true);},route().raw?0:1400);
  });}
