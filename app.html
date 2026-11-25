@@ -13,13 +13,13 @@
 <title>بيستاهل</title>
 <meta name="theme-color" content="#FFF3DF">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
 <style>
 /* تخطيط: تطبيق جوال بعرض أقصى 430px، توجيه RTL، هوية بيستاهل (برتقالي وذهبي وعاجي وبني). نمط واحد ثابت بقرار التصميم. */
 :root{--ivory:#FFF3DF;--ink:#392719;--orange:#F4770B;--orange-strong:#BF5500;--orange-text:#B45000;--gold:#D6AD55;--gold-strong:#B8892E;--err:#C8372D;--line:#EBDDC6;--sk:#DCD0BF;--sk2:#EADFCC;--muted:rgba(57,39,25,.68);color-scheme:light}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{background:var(--ivory)}
-body{font-family:'IBM Plex Sans Arabic','Noto Sans Arabic','DejaVu Sans',sans-serif;color:var(--ink);direction:rtl;font-size:14px;padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+body{font-family:'Almarai','Noto Sans Arabic','Segoe UI',Tahoma,system-ui,sans-serif;color:var(--ink);direction:rtl;font-size:14px;padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
 button,input,select,textarea{font-family:inherit;color:inherit;font-size:inherit}
 button{cursor:pointer}
 .screen{width:100%;max-width:430px;margin:0 auto;min-height:100dvh;background:var(--ivory);position:relative;display:flex;flex-direction:column;overflow-x:clip}
@@ -162,6 +162,64 @@ body{font-feature-settings:"tnum" 1,"kern" 1;-webkit-font-smoothing:antialiased;
 .searchbar:active{box-shadow:var(--sh2)}
 .catb .c{transition:transform .15s,box-shadow .15s}.catb:active .c{transform:scale(.94)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}}
+
+/* ===== إعادة تصميم v3 (2026) ===== */
+:root{--r:24px;--sh1:0 1px 0 rgba(57,39,25,.03),0 8px 28px rgba(57,39,25,.07);--sh2:0 2px 6px rgba(57,39,25,.05),0 18px 44px rgba(57,39,25,.14)}
+body{font-size:15px;line-height:1.6}
+.h2{font-size:20px;line-height:30px;font-weight:800}
+.sech:before{width:0;height:0;display:none}
+.nm{font-size:16px;line-height:24px;font-weight:800}
+.small{font-size:13px;line-height:20px}.link{font-size:13px;font-weight:700;background:rgba(191,85,0,.09);padding:6px 12px;border-radius:999px;gap:4px}
+.card{border-radius:var(--r)}
+.ib{width:44px;height:44px;box-shadow:0 4px 14px rgba(57,39,25,.10)}
+.hero .ib,.pickprev .ib{background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+/* بطاقة المكان: صورة أولاً */
+.pc{width:196px;background:none;box-shadow:none;border-radius:0;overflow:visible}
+.pc .img{height:228px;border-radius:26px;overflow:hidden;box-shadow:var(--sh1)}
+.pc .b{padding:12px 4px 0;gap:4px}
+.pc:active{transform:scale(.97)}
+.badge{top:12px;right:12px;padding:5px 11px 5px 9px;font-size:13px;font-weight:800;background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.hc{border-radius:var(--r);padding:12px;gap:14px}
+.hc .img{width:96px;height:96px;border-radius:18px}
+/* الفئات */
+.cat{height:50px;padding:0 20px;border-radius:18px;background:#fff;box-shadow:var(--sh1);display:flex;align-items:center;gap:10px;flex:none;border:0;font-weight:800;font-size:14px;color:var(--ink);transition:transform .15s}
+.cat svg{color:var(--orange-strong)}.cat:active{transform:scale(.96)}
+.hl{font-size:30px;line-height:42px;font-weight:800;letter-spacing:0;padding:6px 16px 0;text-wrap:balance}
+.hl em{font-style:normal;color:var(--orange-strong)}
+.searchbar{height:56px;border-radius:20px;padding:0 18px;font-size:15px}
+/* شريط التنقل العائم */
+.nav{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));margin:auto 16px calc(12px + env(safe-area-inset-bottom,0px));height:68px;padding:0 6px;border-radius:28px;border:0;background:rgba(255,255,255,.88);box-shadow:0 12px 40px rgba(57,39,25,.18),0 0 0 1px rgba(57,39,25,.04)}
+.nav button{width:62px;height:54px;border-radius:20px;gap:2px;font-size:11px}
+.nav button.on{background:rgba(244,119,11,.13)}.nav button.on:before{display:none}
+.nav .fab{width:56px;height:56px;margin:0;border:0;border-radius:20px;background:var(--orange-strong);box-shadow:0 10px 24px rgba(191,85,0,.4)}
+/* الأزرار والحقول */
+.btn{height:54px;border-radius:20px;font-size:16px;font-weight:800}
+.btn.out{height:50px;border-radius:18px;font-size:15px;border:1.5px solid rgba(191,85,0,.35);color:var(--orange-text)}
+.inp{height:54px;border-radius:16px;background:#fff;border:1.5px solid transparent;box-shadow:var(--sh1);padding:0 16px;font-size:15px}
+.inp:focus{border-color:var(--orange)}
+textarea.inp{height:120px;padding:14px 16px}
+.lbl{font-size:14px;font-weight:800}
+.bbar{background:linear-gradient(to top,var(--ivory) 58%,rgba(255,243,223,0));box-shadow:none;padding:28px 16px calc(14px + env(safe-area-inset-bottom,0px))}
+.bbar .btn{height:56px}
+/* تبويبات مقسّمة */
+.tabs{padding:5px;gap:4px;border-radius:20px}
+.tab{border:0;border-radius:16px;padding:11px 0;font-size:14px;font-weight:800}
+.tab.on{background:var(--orange-strong);color:#fff}
+.seg{border-radius:18px;padding:5px}.seg button{border-radius:14px;height:42px;font-weight:800}
+/* صفحة المكان */
+.hero{height:300px;border-radius:0 0 36px 36px;overflow:hidden}
+.hero.has:after{height:130px}
+.info{border-radius:28px;margin:-44px 16px 0;padding:20px;gap:14px}
+.bar{height:8px;background:#F1E6D3}.bar i{background:var(--orange)}
+.pill{background:rgba(244,119,11,.11);border:0;color:var(--orange-text);font-weight:800;padding:5px 14px;font-size:13px}
+.rv{padding:16px}
+.avatar{width:40px;height:40px}
+.chip{height:40px;padding:0 18px;font-size:14px;font-weight:800;border:0;box-shadow:var(--sh1)}
+.chip.on{box-shadow:0 6px 16px rgba(244,119,11,.3)}
+.empty .circle{width:104px;height:104px}
+.empty b{font-size:20px;font-weight:800}
+.sheet{border-radius:32px 32px 0 0}
+.opt{border-radius:20px;padding:16px}.ico{border-radius:14px}
 </style>
 
 </head>
@@ -201,7 +259,7 @@ var isSaved=function(type,id){return S.saves.some(function(s){return s.type===ty
 
 /* ---------- عناصر مشتركة ---------- */
 function starsRow(v,size){var r=Math.round(v),h='';for(var i=0;i<5;i++){h+=ic('star',size||14,'#B8892E',1.8,i<r?'#B8892E':'none');}return '<span class="stars" style="gap:2px">'+h+'</span>';}
-function ratingLine(score,n,size){if(!n)return '<span class="small muted">لا تقييمات بعد</span>';return '<span class="row" style="gap:6px">'+starsRow(score,size||13)+'<span class="sc">'+fmt(score)+'</span><span class="small muted">('+n+')</span></span>';}
+function ratingLine(score,n,size){if(!n)return '<span class="small muted">لا تقييمات بعد</span>';var z=(size||13)+1;return '<span class="row" style="gap:4px">'+ic('star',z,'#B8892E',1.8,'#B8892E')+'<span class="sc" style="font-size:'+(z+1)+'px">'+fmt(score)+'</span><span class="small muted">('+n+')</span></span>';}
 function ibtn(act,icon,attrs,bg,color){return '<button class="ib" data-act="'+act+'" '+(attrs||'')+' aria-label="'+E(icon)+'" style="'+(bg?'background:'+bg+';':'')+(color?'color:'+color:'')+'">'+ic(icon,20)+'</button>';}
 function backBtn(){return '<button class="ib" data-act="back" aria-label="رجوع">'+ic('back',20)+'</button>';}
 function topbar(title,right){return '<div class="row tb" style="justify-content:space-between;padding:16px"><div class="row" style="gap:12px">'+backBtn()+'<span style="font-size:19px;font-weight:700">'+E(title)+'</span></div>'+(right||'')+'</div>';}
@@ -231,9 +289,9 @@ function vOnb(){var i=S.onb||0,o=ONB[i];return '<div class="screen"><div class="
 function unreadCount(){var seen=LS.get('seen_notif',0);return notifs().filter(function(n){return n.ts>seen;}).length;}
 function notifs(){var mine={};S.places.forEach(function(p){if(p.by===S.uid)mine[p.id]=1;});return S.reviews.filter(function(r){return mine[r.placeId]&&r.by!==S.uid;}).sort(function(a,b){return b.ts-a.ts;});}
 function vHome(){
- var ps=S.places;var head='<div class="row" style="justify-content:space-between;padding:16px 16px 4px"><div class="row" style="gap:10px"><img src="logo-mark.png" alt="" width="44" height="44"><div class="col"><span style="font-size:19px;font-weight:700;line-height:24px">بيستاهل</span><span class="small muted">وين رح تاكل اليوم؟</span></div></div><div class="row" style="gap:8px">'+(PAGES?'<button class="ib" data-go="map" aria-label="الخريطة">'+ic('map',20)+'</button>':'')+'<button class="ib" data-go="notif" aria-label="الإشعارات" style="position:relative">'+ic('bell',20)+(unreadCount()?'<i style="position:absolute;top:8px;left:10px;width:9px;height:9px;border-radius:50%;background:var(--orange);border:2px solid #fff"></i>':'')+'</button></div></div>';
- var sb='<div style="padding:12px 16px 10px"><button class="row searchbar" data-go="search">'+ic('search',18)+'<span style="flex:1;text-align:right">ابحث عن مكان أو طبق</span>'+ic('filter',18)+'</button></div>';
- var cats='<div class="hscroll" style="gap:14px;padding:8px 16px 4px">'+CATS.map(function(c){return '<button data-act="cat" data-id="'+c.id+'" class="col catb" style="align-items:center;gap:8px;flex:none;background:none;border:0;width:68px"><span class="c" style="width:58px;height:58px;border-radius:50%;background:#fff;box-shadow:var(--sh1);display:flex;align-items:center;justify-content:center;color:var(--orange-strong)">'+ic(c.i,26)+'</span><span style="font-size:12px;font-weight:600">'+c.n+'</span></button>';}).join('')+'</div>';
+ var ps=S.places;var head='<div class="row" style="justify-content:space-between;padding:16px 16px 0"><div class="row" style="gap:10px"><img src="logo-mark.png" alt="" width="40" height="40"><span style="font-size:18px;font-weight:800">بيستاهل</span></div><div class="row" style="gap:8px">'+(PAGES?'<button class="ib" data-go="map" aria-label="الخريطة">'+ic('map',20)+'</button>':'')+'<button class="ib" data-go="notif" aria-label="الإشعارات" style="position:relative">'+ic('bell',20)+(unreadCount()?'<i style="position:absolute;top:8px;left:10px;width:9px;height:9px;border-radius:50%;background:var(--orange);border:2px solid #fff"></i>':'')+'</button></div></div>';
+ var sb='<h1 class="hl">وين رح <em>تاكل</em> اليوم؟</h1><div style="padding:14px 16px 12px"><button class="row searchbar" data-go="search">'+ic('search',18)+'<span style="flex:1;text-align:right">ابحث عن مكان أو طبق</span>'+ic('filter',18)+'</button></div>';
+ var cats='<div class="hscroll" style="gap:10px;padding:8px 16px 6px">'+CATS.map(function(c){return '<button data-act="cat" data-id="'+c.id+'" class="cat">'+ic(c.i,22)+'<span>'+c.n+'</span></button>';}).join('')+'</div>';
  var body='';
  if(!ps.length){body=empty('pin','لا توجد أماكن بعد','كن أول من يضيف مكاناً ويشارك تقييمه','<button class="btn" style="width:auto;padding:0 32px;margin-top:8px" data-go="addplace">إضافة مكان</button>');}
  else{var top=ps.filter(function(p){return placeStats(p.id).n>0;}).sort(function(a,b){return placeStats(b.id).score-placeStats(a.id).score;}).slice(0,10);
